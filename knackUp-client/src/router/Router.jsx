@@ -1,7 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "../layout/Root";
 import Home from "../pages/home/Home";
-import SingUp from "../auhentication/singUp/SingUp";
+import SignUp from "../authentication/singUp/SignUp";
+
+
 
 
 const Router = createBrowserRouter([
@@ -17,7 +19,7 @@ const Router = createBrowserRouter([
     },
     {
       path: "/signup",
-      element: <SingUp></SingUp>
+      element: <SignUp></SignUp>
     }
   ]);
 

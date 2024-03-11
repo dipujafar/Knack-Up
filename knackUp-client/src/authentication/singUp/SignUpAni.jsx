@@ -1,7 +1,7 @@
 import Lottie from 'lottie-react'
 import signAni from "../../assets/ani/sign_up-ani.json"
 
-const SingUpAni = () => {
+const SignUpAni = () => {
     return (
         <div >
         <Lottie animationData={signAni} loop={true}></Lottie>
@@ -9,4 +9,4 @@ const SingUpAni = () => {
     );
 };
 
-export default SingUpAni;
+export default SignUpAni;
