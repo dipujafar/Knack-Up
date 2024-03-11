@@ -12,7 +12,7 @@ const SignUp = () => {
       </Helmet>
       <Container>
         <div className="min-h-screen bg-cover flex flex-col justify-between items-center">
-          <div className="flex flex-col md:flex-row justify-center items-center gap-">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-5">
             <div className="flex-1">
              <SignUpForm></SignUpForm>
             </div>
