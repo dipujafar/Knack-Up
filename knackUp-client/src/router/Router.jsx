@@ -16,7 +16,7 @@ const Router = createBrowserRouter([
       ]
     },
     {
-      path: "/singUp",
+      path: "/signup",
       element: <SingUp></SingUp>
     }
   ]);
