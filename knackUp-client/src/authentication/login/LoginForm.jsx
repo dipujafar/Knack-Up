@@ -53,7 +53,7 @@ const LoginForm = () => {
               {...register("email", { required: true })}
               id=""
               placeholder="Your Email"
-              className="w-3/4 mx-auto py-1 px-2  bg-blue-900 rounded"
+              className="w-3/4 mx-auto py-1 px-2  bg-blue-950 rounded"
             />
           </div>
           {errors.email?.type === "required" && (
@@ -75,7 +75,7 @@ const LoginForm = () => {
               })}
               id=""
               placeholder="Password"
-              className="w-3/4 mx-auto py-1 px-2 bg-blue-900  rounded"
+              className="w-3/4 mx-auto py-1 px-2 bg-blue-950  rounded"
             />
             <span onClick={() => setShow(!show)} className="absolute right-10">
               {show ? (

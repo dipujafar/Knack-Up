@@ -57,7 +57,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className=" md:w-3/4 bg-black bg-transparent bg-opacity-40  mx-auto border  rounded shadow-lg shadow-gray-300 p-5 text-white">
+    <div className=" md:w-3/4 bg-black bg-transparent bg-opacity-50  mx-auto border  rounded shadow-lg shadow-gray-300 p-5 text-white">
       <h1 className="text-2xl font-medium mb-5 uppercase text-center">
         Sign Up
       </h1>
@@ -73,7 +73,7 @@ const SignUpForm = () => {
             {...register("name", { required: true })}
             id=""
             placeholder="Your Name"
-            className="w-3/4 mx-auto py-1 px-2  bg-blue-900 rounded"
+            className="w-3/4 mx-auto py-1 px-2  bg-blue-950 rounded"
           />
         </div>
         {errors.name?.type === "required" && (
@@ -91,7 +91,7 @@ const SignUpForm = () => {
             {...register("email", { required: true })}
             id=""
             placeholder="Your Email"
-            className="w-3/4 mx-auto py-1 px-2  bg-blue-900 rounded"
+            className="w-3/4 mx-auto py-1 px-2  bg-blue-950 rounded"
           />
         </div>
         {errors.email?.type === "required" && (
@@ -113,7 +113,7 @@ const SignUpForm = () => {
             })}
             id=""
             placeholder="Password"
-            className="w-3/4 mx-auto py-1 px-2 bg-blue-900  rounded"
+            className="w-3/4 mx-auto py-1 px-2 bg-blue-950  rounded"
           />
           <span onClick={() => setShow(!show)} className="absolute right-10">
             {show ? (
@@ -152,7 +152,7 @@ const SignUpForm = () => {
             })}
             id=""
             placeholder="Confirm Password"
-            className="w-3/4 mx-auto py-1 px-2 bg-blue-900  rounded"
+            className="w-3/4 mx-auto py-1 px-2 bg-blue-950  rounded"
           />
           <span onClick={() => setShow(!show)} className="absolute right-10">
             {show ? (
