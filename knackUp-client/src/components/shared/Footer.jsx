@@ -1,16 +1,16 @@
 import Container from "./Container";
 import logo from "../../assets/img/knackUp.png";
+import moment from 'moment'
 
 const Footer = () => {
   return (
-    <footer className="md:p-10 bg-transparent text-neutral-content">
+    <footer className="md:p-10 bg-gradient-to-r from-cyan-900 to-cyan-800 space-y-5 md:space-y-10 text-neutral-content">
       <Container>
         <div className="flex flex-col md:flex-row justify-between items-center">
           <aside>
             <img src={logo} alt="" className="w-20" />
             <p className="md:text-xl">
               <span className="text-cyan-400">KNACK</span>
-              <span className="text-cyan-300"> UP</span>
               <br />
               Providing enhance skill level since 2024
             </p>
@@ -55,7 +55,7 @@ const Footer = () => {
           </nav>
         </div>
         <aside className="text-center mt-4 md:text-xl">
-          <p>Copyright © 2024 - All right reserved by  Knack Up</p>
+          <p>Copyright © {moment().format("Y")} - All right reserved by  Knack</p>
         </aside>
       </Container>
     </footer>

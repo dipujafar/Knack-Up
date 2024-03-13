@@ -69,7 +69,6 @@ const Navbar = () => {
             <img src={logo} alt="" className="w-10 text-cyan-500"/>
             <div>
             <span className="text-cyan-500">KNACK</span>
-            <span className="text-cyan-400"> UP</span>
             </div>
           </Link>
         </div>
