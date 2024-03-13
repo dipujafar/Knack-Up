@@ -4,7 +4,7 @@ import moment from 'moment'
 
 const Footer = () => {
   return (
-    <footer className="md:p-10 bg-gradient-to-r from-cyan-900 to-cyan-800 space-y-5 md:space-y-10 text-neutral-content">
+    <footer className=" mt-5 md:p-10 bg-gradient-to-r from-cyan-900 to-cyan-800 space-y-5 md:space-y-10 text-neutral-content">
       <Container>
         <div className="flex flex-col md:flex-row justify-between items-center">
           <aside>

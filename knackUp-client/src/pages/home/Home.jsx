@@ -1,6 +1,8 @@
 import Banner from "./Banner";
 import Collaborators from "./Collaborators";
 import ComeToTech from "./ComeToTech";
+import Feedback from "./Feedback";
+import PopularCourse from "./PopularCourse";
 import Stat from "./Stat";
 
 
@@ -9,8 +11,10 @@ const Home = () => {
         <div className="space-y-5 md:space-y-10">
             <Banner></Banner>
             <Collaborators></Collaborators>
+            <PopularCourse></PopularCourse>
             <Stat></Stat>
-            <ComeToTech></ComeToTech> 
+            <ComeToTech></ComeToTech>
+            <Feedback></Feedback>
         </div>
     );
 };

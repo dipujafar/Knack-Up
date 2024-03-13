@@ -2,15 +2,25 @@ import { Link } from "react-router-dom";
 import teacher from "../../assets/img/teacher.jpeg";
 import Container from "../../components/shared/Container";
 import SectionTitle from "../../components/shared/SectionTitle";
+import Aos from "aos";
+import { useEffect } from "react";
 
 const ComeToTech = () => {
+  useEffect(() => {
+    Aos.init();
+  }, []);
+
   return (
     <Container>
       <div className="w-full bg-cyan-950 py-2 rounded">
-        <SectionTitle heading={"Become an instructor"} subHeading={"teach many of learners on Knack"}></SectionTitle>
+        <SectionTitle
+          heading={"Become an instructor"}
+          subHeading={"teach many of learners on Knack"}
+        ></SectionTitle>
         <div className="flex flex-col md:flex-row  justify-center items-center gap-5 md:gap-16">
           <div>
-            <img src={teacher} alt="teacherImg" className="lg:h-72" />
+            <img src={teacher} alt="teacherImg" className="lg:h-72" data-aos="fade-right"
+              data-aos-duration="2000" />
           </div>
           <div className="flex-1 text-white max-w-md">
             <h1 className="text-3xl font-medium mb-5">Come Teach With Us</h1>

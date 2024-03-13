@@ -4,7 +4,7 @@ import Footer from "../components/shared/Footer";
 
 const Root = () => {
   return (
-    <div className="bg-gradient-to-r from-cyan-950 to-cyan-900 space-y-5 md:space-y-10">
+    <div className="bg-gradient-to-r from-cyan-950 to-cyan-900">
       <Navbar></Navbar>
       <div className="min-h-[calc(100vh-312px)]">
         <Outlet></Outlet>

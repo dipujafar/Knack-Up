@@ -1,0 +1,50 @@
+[
+    {
+        "image": "https://i.ibb.co/R3F7w2d/image2.jpg",
+        "name": "Mohammad Rahman",
+        "class_title": "Web Development Fundamentals",
+        "review": "Excellent course! Covered all basics thoroughly. Enjoyed the interactive learning experience. Highly recommend.",
+        "instructor": "John Doe",
+        "rating": 4.5
+    },
+    {
+        "image": "https://i.ibb.co/dtqTXWv/image1.jpg",
+        "name": "Sadia Islam",
+        "class_title": "Data Science with Python",
+        "review": "Informative content, but could be more hands-on. Instructor was knowledgeable. Overall, a good learning experience.",
+        "instructor": "Jane Smith",
+        "rating": 4.2
+    },
+    {
+        "image": "https://i.ibb.co/2hGP3jj/image5.jpg",
+        "name": "Abdul Aziz",
+        "class_title": "Digital Marketing Strategies",
+        "review": "Found the strategies practical and effective. Could use more real-life examples. Good value for the price.",
+        "instructor": "Alex Johnson",
+        "rating": 3.0
+    },
+    {
+        "image": "https://i.ibb.co/wgH0hTd/image3.jpg",
+        "name": "Farhana Ahmed",
+        "class_title": "Graphic Design Essentials",
+        "review": "Absolutely loved the creative projects. Instructor was engaging. Would love more advanced tutorials in the future.",
+        "instructor": "Emily Brown",
+        "rating": 4.8
+    },
+    {
+        "image": "https://i.ibb.co/wg4Xm5s/image6.jpg",
+        "name": "Rahim Khan",
+        "class_title": "Mobile App Development with React Native",
+        "review": "Challenging but rewarding course. Helped me build my first app. Clear instructions. Recommend for aspiring developers.",
+        "instructor": "Chris Wilson",
+        "rating": 3.6
+    },
+    {
+        "image": "https://i.ibb.co/kcvH9zh/image4.jpg",
+        "name": "Nadia Begum",
+        "class_title": "Photography Basics and Beyond",
+        "review": "Informative for beginners. More practical assignments would be appreciated. Good instructor engagement.",
+        "instructor": "Sarah Martinez",
+        "rating": 3
+    }
+]

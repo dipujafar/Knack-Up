@@ -1,0 +1,92 @@
+[
+    {
+      "title": "Web Development Fundamentals",
+      "instructor": "John Doe",
+      "email": "john.doe@example.com",
+      "image": "https://i.ibb.co/9yPQQny/webDev.jpg",
+      "price": 49.99,
+      "short_description": "Learn the basics of web development, including HTML, CSS, and JavaScript.",
+      "total_enrollment": 500
+    },
+    {
+      "title": "Data Science with Python",
+      "instructor": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "image": "https://i.ibb.co/YTX98gH/data-Science.jpg",
+      "price": 79.99,
+      "short_description": "Explore data science concepts using Python programming language.",
+      "total_enrollment": 300
+    },
+    {
+      "title": "Digital Marketing Strategies",
+      "instructor": "Alex Johnson",
+      "email": "alex.johnson@example.com",
+      "image": "https://i.ibb.co/9GdJsBW/digitalmrketing.png",
+      "price": 59.99,
+      "short_description": "Master the art of digital marketing and develop effective online strategies.",
+      "total_enrollment": 400
+    },
+    {
+      "title": "Graphic Design Essentials",
+      "instructor": "Emily Brown",
+      "email": "emily.brown@example.com",
+      "image": "https://i.ibb.co/dJ6sk8F/graphic.jpg",
+      "price": 69.99,
+      "short_description": "Learn the fundamental principles of graphic design and create visually appealing content.",
+      "total_enrollment": 250
+    },
+    {
+      "title": "Mobile App Development with React Native",
+      "instructor": "Chris Wilson",
+      "email": "chris.wilson@example.com",
+      "image": "https://i.ibb.co/4gC2g4W/appDevRN.jpg",
+      "price": 89.99,
+      "short_description": "Build cross-platform mobile apps using React Native framework.",
+      "total_enrollment": 350
+    },
+    {
+      "title": "Photography Basics and Beyond",
+      "instructor": "Sarah Martinez",
+      "email": "sarah.martinez@example.com",
+      "image": "https://i.ibb.co/yS93Vjg/Photo-Graphi.jpg",
+      "price": 54.99,
+      "short_description": "Explore the fundamentals of photography and enhance your skills behind the lens.",
+      "total_enrollment": 200
+    },
+    {
+      "title": "Social Media Management",
+      "instructor": "Michael Taylor",
+      "email": "michael.taylor@example.com",
+      "image": "https://i.ibb.co/KKnpY68/social-Media.png",
+      "price": 44.99,
+      "short_description": "Learn effective social media management strategies for personal and business growth.",
+      "total_enrollment": 300
+    },
+    {
+      "title": "Financial Literacy and Budgeting",
+      "instructor": "Laura Rodriguez",
+      "email": "laura.rodriguez@example.com",
+      "image": "https://i.ibb.co/5kq8NMM/financial.jpg",
+      "price": 39.99,
+      "short_description": "Gain essential financial literacy skills and learn effective budgeting techniques.",
+      "total_enrollment": 150
+    },
+    {
+      "title": "Cybersecurity Fundamentals",
+      "instructor": "Mark Thompson",
+      "email": "mark.thompson@example.com",
+      "image": "https://i.ibb.co/bgtmdxp/cyber.jpg",
+      "price": 79.99,
+      "short_description": "Understand the basics of cybersecurity and protect yourself online.",
+      "total_enrollment": 200
+    },
+    {
+      "title": "Business Communication Skills",
+      "instructor": "Amanda White",
+      "email": "amanda.white@example.com",
+      "image": "https://i.ibb.co/rsGwrZM/Bcom.jpg",
+      "price": 49.99,
+      "short_description": "Improve your business communication skills and enhance professional relationships.",
+      "total_enrollment": 250
+    }
+  ]
