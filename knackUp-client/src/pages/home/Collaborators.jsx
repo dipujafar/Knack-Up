@@ -8,14 +8,21 @@ import Container from "../../components/shared/Container";
 import SectionTitle from "../../components/shared/SectionTitle";
 
 const Collaborators = () => {
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["collaborators"],
     queryFn: async () => {
       const res = await axios.get("collaboration.json");
       return res?.data;
     },
   });
-  console.log(data);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-dots loading-lg text-cyan-600"></span>
+      </div>
+    );
+  }
   return (
     <Container>
       <div>
