@@ -1,12 +1,11 @@
 import { Helmet } from "react-helmet-async";
 import SignUpForm from "./SignUpForm"
 import SignUpAni from "./SignUpAni";
-import skillBg from "../../assets/img/skillbg2.jpeg";
 import Container from "../../components/shared/Container";
 
 const SignUp = () => {
   return (
-    <div style={{ backgroundImage: `url(${skillBg})` }} className="bg-cover">
+    <div className="bg-gradient-to-r from-cyan-950 to-cyan-800">
       <Helmet>
         <title>Knack | Sign Up</title>
       </Helmet>
