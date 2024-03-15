@@ -5,7 +5,7 @@ import SignUp from "../authentication/singUp/SignUp";
 import Login from "../authentication/login/Login";
 import AllClasses from "../pages/allClasses/AllClasses";
 import TechOn from "../pages/techOnKnack/TechOn";
-import ClassDetails from "../pages/allClasses/ClassDetails";
+import PrivateRoute from "./PrivateRoute";
 
 
 
@@ -25,7 +25,7 @@ const Router = createBrowserRouter([
         },
         {
           path: "tech",
-          element: <TechOn></TechOn>
+          element: <PrivateRoute><TechOn></TechOn></PrivateRoute> 
         }
       ]
     },

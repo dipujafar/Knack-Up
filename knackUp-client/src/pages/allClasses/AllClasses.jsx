@@ -33,23 +33,23 @@ const AllClasses = () => {
       <Container>
         <div
           id="classes"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
         >
           {classes?.map((course) => (
             <div
               key={course?._id}
-              className="card lg:card-side group lg:h-72 obbg-gradient-to-r from-cyan-700 to-cyan-950 text-white shadow-xl"
+              className="card  group  bg-gradient-to-r from-cyan-700 to-cyan-950 text-white shadow-xl"
               data-aos="fade-up"
               data-aos-duration="3000"
             >
-              <figure className="lg:w-7/12">
+              <figure className="">
                 <img
                   src={course?.image}
                   alt="Movie"
-                  className="h-52 lg:h-72 w-full object-cover group-hover:scale-90 duration-1000"
+                  className="h-52 w-full object-cover group-hover:scale-90 duration-1000"
                 />
               </figure>
-              <div className=" p-4 md:card-body lg:w-1/3">
+              <div className=" card-body">
                 <h2 className="md:card-title text-lg text-cyan-200 font-bold">
                   {course?.title}
                 </h2>

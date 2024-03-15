@@ -1,8 +1,29 @@
 import { Link, NavLink } from "react-router-dom";
-import logo from "../../assets/img/knackUp.png"
+import logo from "../../assets/img/knackUp.png";
 import Container from "./Container";
+import useAuth from "../../hook/useAuth";
+import profile from "../../assets/img/profile.png";
+import { useRef, useState } from "react";
+import { FaHome } from "react-icons/fa";
+import { FiLogIn } from "react-icons/fi";
+import { CgLogOut } from "react-icons/cg";
 
 const Navbar = () => {
+  const { user, logOut } = useAuth();
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef();
+  const imgRef = useRef();
+
+  window.addEventListener("click", (e) => {
+    if (e.target !== menuRef.current && e.target !== imgRef.current) {
+      setOpen(false);
+    }
+  });
+
+  const handleLogout = () => {
+    logOut().then();
+  };
+
   const navLinks = (
     <>
       <li>
@@ -42,7 +63,11 @@ const Navbar = () => {
       <div className="navbar bg-transparent text-white">
         <div className="navbar-start">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="cursor-pointer lg:hidden">
+            <div
+              tabIndex={0}
+              role="button"
+              className="cursor-pointer lg:hidden"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -66,9 +91,9 @@ const Navbar = () => {
             </ul>
           </div>
           <Link to="/" className="btn  btn-ghost text-xl">
-            <img src={logo} alt="" className="w-10 text-cyan-500"/>
+            <img src={logo} alt="" className="w-10 text-cyan-500" />
             <div>
-            <span className="text-cyan-500">KNACK</span>
+              <span className="text-cyan-500">KNACK</span>
             </div>
           </Link>
         </div>
@@ -76,7 +101,63 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1 uppercase">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <Link to="/login" className="btn btn-outline btn-sm bg-gradient-to-r from-cyan-500 to-cyan-600">LOGIN</Link>
+          {user ? (
+            <div className="relative">
+              <img
+                ref={imgRef}
+                onClick={() => setOpen(!open)}
+                src={user?.photoURL}
+                className="w-10 rounded-full object-cover"
+              />
+              {open && (
+                <div
+                  ref={menuRef}
+                  className="absolute top-14 right-0 z-10 bg-gradient-to-r from-sky-800 to-sky-600 rounded text-gray-200 w-52 p-4 space-y-2"
+                >
+                  <p>User not available</p>
+                  <hr />
+                  <Link to="/">
+                    <p className=" mt-1 flex items-center gap-1">
+                      <FaHome /> Home
+                    </p>
+                  </Link>
+                  <hr />
+                    <button  onClick={handleLogout} className="mt-1 flex items-center gap-1">
+                      <CgLogOut /> Logout
+                    </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="relative">
+              <img
+                ref={imgRef}
+                onClick={() => setOpen(!open)}
+                src={profile}
+                className="w-12 rounded-full object-cover"
+              />
+              {open && (
+                <div
+                  ref={menuRef}
+                  className="absolute top-14 right-0 z-10 bg-gradient-to-r from-sky-800 to-sky-600 rounded text-gray-200 w-52 p-4 space-y-2"
+                >
+                  <p>User not available</p>
+                  <hr />
+                  <Link to="/">
+                    <p className=" mt-1 flex items-center gap-1">
+                      <FaHome /> Home
+                    </p>
+                  </Link>
+                  <hr />
+                  <Link to="/login">
+                    <button className="mt-1 flex items-center gap-1">
+                      <FiLogIn /> Login
+                    </button>
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </Container>
