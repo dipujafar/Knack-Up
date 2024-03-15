@@ -46,7 +46,7 @@ const AllClasses = () => {
                 <img
                   src={course?.image}
                   alt="Movie"
-                  className="h-52 w-full object-cover group-hover:scale-90 duration-1000"
+                  className="md:h-[183px] w-full object-cover group-hover:scale-90 duration-1000"
                 />
               </figure>
               <div className=" card-body">

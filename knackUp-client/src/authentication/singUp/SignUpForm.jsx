@@ -186,9 +186,12 @@ const SignUpForm = () => {
           <span className="text-red-600 ml-10">Image is required</span>
         )}
 
-        <button className="w-full btn bg-blue-100 btn-sm">
-          <input type="submit" value="Sign Up" className="w-full" />
-        </button>
+        <input
+          type="submit"
+          value="Sign Up"
+          className="w-full btn bg-blue-100 btn-sm"
+        />
+
         <p className="mt-2">
           Already have account?{" "}
           <Link to="/login">

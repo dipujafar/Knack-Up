@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { FaCamera } from "react-icons/fa";
 
-
 const TechOnForm = () => {
   const {
     register,
@@ -18,7 +17,9 @@ const TechOnForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Name input */}
         <div className="flex flex-col md:flex-row gap-1 mb-5 ">
-          <label>Full Name <sup className="text-red-600">*</sup> :</label>
+          <label>
+            Full Name <sup className="text-red-600">*</sup> :
+          </label>
           <input
             type="text"
             name="name"
@@ -32,25 +33,11 @@ const TechOnForm = () => {
           <span className="text-red-600 ml-10">Name is required</span>
         )}
 
-        {/* Email input */}
-        <div className="flex flex-col md:flex-row gap-1 mb-5 ">
-          <label>Your Email  <sup className="text-red-600">*</sup>  :</label>
-          <input
-            type="email"
-            name="email"
-            {...register("email", { required: true })}
-            id=""
-            placeholder="Your Email"
-            className="w-full md:w-3/4 mx-auto py-1 px-2  bg-blue-950 rounded"
-          />
-        </div>
-        {errors.email?.type === "required" && (
-          <span className="text-red-600 ml-10">Email is required</span>
-        )}
-
         {/* Title input */}
         <div className="flex flex-col md:flex-row gap-1 mb-5 ">
-          <label>Your Title  <sup className="text-red-600">*</sup> :</label>
+          <label>
+            Your Title <sup className="text-red-600">*</sup> :
+          </label>
           <input
             type="text"
             name="title"
@@ -66,7 +53,9 @@ const TechOnForm = () => {
 
         {/* Experience input */}
         <div className="flex flex-col md:flex-row gap-1 mb-5 ">
-          <label>Experience  <sup className="text-red-600">*</sup> :</label>
+          <label>
+            Experience <sup className="text-red-600">*</sup> :
+          </label>
           <select
             {...register("experience", { required: true })}
             className="w-full md:w-3/4 mx-auto py-1 px-2  bg-blue-950 rounded"
@@ -82,7 +71,9 @@ const TechOnForm = () => {
 
         {/* Category input */}
         <div className="flex flex-col md:flex-row gap-1 mb-5 ">
-          <label>Category  <sup className="text-red-600">*</sup> :</label>
+          <label>
+            Category <sup className="text-red-600">*</sup> :
+          </label>
           <select
             {...register("category", { required: true })}
             className="w-full md:w-3/4 mx-auto py-1 px-2  bg-blue-950 rounded"
@@ -103,7 +94,7 @@ const TechOnForm = () => {
         <div className="mb-5">
           <label className="flex gap-2 items-center mb-2">
             <FaCamera className="text-2xl" />
-            Profile  <sup className="text-red-600">*</sup> :
+            Profile <sup className="text-red-600">*</sup> :
           </label>
           <input
             type="file"

@@ -112,17 +112,17 @@ const Navbar = () => {
               {open && (
                 <div
                   ref={menuRef}
-                  className="absolute top-14 right-0 z-10 bg-gradient-to-r from-sky-800 to-sky-600 rounded text-gray-200 w-52 p-4 space-y-2"
+                  className="absolute top-14 right-0 z-10 bg-gradient-to-r from-sky-800 to-sky-600 rounded  text-gray-200 w-52 p-4 space-y-2"
                 >
-                  <p>User not available</p>
+                  <p className="text-center text-xl">{user?.displayName}</p>
                   <hr />
                   <Link to="/">
-                    <p className=" mt-1 flex items-center gap-1">
+                    <p className=" mt-1 flex items-center gap-1 hover:text-sky-300">
                       <FaHome /> Home
                     </p>
                   </Link>
                   <hr />
-                    <button  onClick={handleLogout} className="mt-1 flex items-center gap-1">
+                    <button  onClick={handleLogout} className="mt-1 flex items-center gap-1 hover:text-sky-300">
                       <CgLogOut /> Logout
                     </button>
                 </div>
@@ -144,13 +144,13 @@ const Navbar = () => {
                   <p>User not available</p>
                   <hr />
                   <Link to="/">
-                    <p className=" mt-1 flex items-center gap-1">
+                    <p className=" mt-1 flex items-center gap-1 hover:text-sky-300">
                       <FaHome /> Home
                     </p>
                   </Link>
                   <hr />
                   <Link to="/login">
-                    <button className="mt-1 flex items-center gap-1">
+                    <button className="mt-1 flex items-center gap-1 hover:text-sky-300">
                       <FiLogIn /> Login
                     </button>
                   </Link>
