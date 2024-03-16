@@ -1,11 +1,14 @@
 import { NavLink } from "react-router-dom";
 import useAdmin from "../../hook/useAdmin";
 import useTeacher from "../../hook/useTeacher";
+import useStudent from "../../hook/useStudent";
 
 const DashboardLinks = () => {
   const [isAdmin] = useAdmin();
   const [isTeacher] = useTeacher();
+  const [isStudent] = useStudent();
   console.log(isTeacher)
+  console.log(isStudent)
   if (isAdmin) {
     return (
       <>
@@ -31,12 +34,12 @@ const DashboardLinks = () => {
         </li>
         <li>
           <NavLink
-            to="/user"
+            to="/dashboard/users"
             className={({ isActive, isPending }) =>
               isPending ? "pending" : isActive ? "active" : ""
             }
           >
-            User
+            Users
           </NavLink>
         </li>
         <li>
@@ -53,7 +56,7 @@ const DashboardLinks = () => {
     );
   } 
   
-  else if(isTeacher){
+ if(isTeacher){
     return (
       <>
         <li>
@@ -90,7 +93,7 @@ const DashboardLinks = () => {
     );
   }
   
-  else {
+ if(isStudent) {
     return (
       <>
         <li>

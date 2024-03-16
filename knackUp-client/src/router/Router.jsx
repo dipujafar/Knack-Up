@@ -10,6 +10,7 @@ import PrivateRoute from "./PrivateRoute";
 import EnrollClass from "../pages/dashboard/EnrollClass";
 import Dashboard from "../layout/dashboard/Dashboard";
 import ErrorPage from "../pages/ErrorPage";
+import AllUsers from "../pages/dashboard/AllUsers";
 
 
 
@@ -52,6 +53,10 @@ const Router = createBrowserRouter([
         {
           path: "myClass",
           element: <EnrollClass></EnrollClass>
+        },
+        {
+          path:"users",
+          element: <AllUsers></AllUsers>
         }
       ]
     }

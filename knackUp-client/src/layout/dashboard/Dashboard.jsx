@@ -6,7 +6,7 @@ const Dashboard = () => {
   return (
     <div className="bg-gradient-to-r from-cyan-950 to-cyan-900">
       <DashboardNav></DashboardNav>
-      <div className="min-h-[calc(100vh-312px)]">
+      <div className="min-h-[calc(100vh-312px)] my-5 md:my-10">
         <Outlet></Outlet>
       </div>
       <Footer></Footer>

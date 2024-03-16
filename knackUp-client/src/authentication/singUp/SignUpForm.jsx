@@ -49,6 +49,7 @@ const SignUpForm = () => {
             const userInfo = {
               email,
               name,
+              image: imageData?.data?.url
             };
 
             axiosPublic.post("/users", userInfo).then((res) => {

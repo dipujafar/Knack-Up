@@ -45,6 +45,7 @@ const LoginForm = () => {
         const userInfo = {
           email: result.user.email,
           name: result.user.displayName,
+          image: result.user.photoURL
         };
         axiosPublic.post("/users", userInfo).then(() => {
           toast.success("Success Login with Google");

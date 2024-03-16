@@ -121,7 +121,7 @@ const Navbar = () => {
                 ref={imgRef}
                 onClick={() => setOpen(!open)}
                 src={user?.photoURL}
-                className="w-10 rounded-full object-cover"
+                className="w-10 h-10 rounded-full object-cover"
               />
               {open && (
                 <div

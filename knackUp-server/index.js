@@ -17,7 +17,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-const  verifyToken = async (req, res, next) => {
+const verifyToken = async (req, res, next) => {
   if (!req.headers.authorization) {
     return res.status(401).send({ message: "unauthorized access" });
   }
@@ -53,6 +53,19 @@ async function run() {
     const feedbackCollection = client.db("Knack").collection("review");
     const userCollection = client.db("Knack").collection("user");
 
+    // middleware
+
+    const verifyAdmin = async (req, res, next) => {
+      const email = req?.decoded?.email;
+      const query = { email: email };
+      const user = await userCollection.findOne(query);
+      const isAdmin = user?.role === "admin";
+      if (!isAdmin) {
+        return res.status(403).send({ message: "forbidden" });
+      }
+      next();
+    };
+
     //jwt related apis
     app.post("/jwt", async (req, res) => {
       try {
@@ -82,6 +95,17 @@ async function run() {
     });
 
     //user related apis
+    app.get("/users", verifyToken, verifyAdmin, async (req, res) => {
+      try {
+        const result = await userCollection.find().toArray();
+        res.send(result);
+      } catch {
+        (err) => {
+          res.send(err);
+        };
+      }
+    });
+
     app.post("/users", async (req, res) => {
       try {
         const user = req.body;
@@ -99,6 +123,7 @@ async function run() {
       }
     });
 
+    // admin related apis
     app.get("/users/admin/:email", verifyToken, async (req, res) => {
       try {
         const email = req.params.email;
@@ -120,6 +145,26 @@ async function run() {
       }
     });
 
+    app.put("/users/admin/:email", async (req, res) => {
+      try {
+        const email = req.params.email;
+        const query = { email: email };
+        const options = { upsert: true };
+        const updateDoc = {
+          $set: {
+            role: "admin",
+          },
+        };
+        const result = await userCollection.updateOne(query, updateDoc, options);
+        res.send(result);
+      } catch {
+        (err) => {
+          res.send(err);
+        };
+      }
+    });
+
+    // teacher related apis
     app.get("/users/teacher/:email", verifyToken, async (req, res) => {
       try {
         const email = req.params.email;
@@ -131,9 +176,30 @@ async function run() {
         const user = await userCollection.findOne(query);
         let teacher = false;
         if (user) {
-          teacher = user?.role === "teacher" && user?.accept === "accepted";
+          teacher = user?.role === "teacher";
         }
         res.send({ teacher });
+      } catch {
+        (err) => {
+          res.send(err);
+        };
+      }
+    });
+
+    app.get("/users/student/:email", verifyToken, async (req, res) => {
+      try {
+        const email = req.params.email;
+        if (email !== req.decoded.email) {
+          return res.status(403).send({ message: "forbidden" });
+        }
+
+        const query = { email: email };
+        const user = await userCollection.findOne(query);
+        let student = false;
+        if (user) {
+          student = user?.role === "student";
+        }
+        res.send({ student });
       } catch {
         (err) => {
           res.send(err);
