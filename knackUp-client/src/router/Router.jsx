@@ -7,6 +7,10 @@ import AllClasses from "../pages/allClasses/AllClasses";
 import TechOn from "../pages/techOnKnack/TechOn";
 import PrivateRoute from "./PrivateRoute";
 
+import EnrollClass from "../pages/dashboard/EnrollClass";
+import Dashboard from "../layout/dashboard/Dashboard";
+import ErrorPage from "../pages/ErrorPage";
+
 
 
 
@@ -14,6 +18,7 @@ const Router = createBrowserRouter([
     {
       path: "/",
       element: <Root></Root>,
+      errorElement: <ErrorPage></ErrorPage>,
       children: [
         {
           path: "/",
@@ -31,11 +36,24 @@ const Router = createBrowserRouter([
     },
     {
       path: "/signup",
-      element: <SignUp></SignUp>
+      element: <SignUp></SignUp>,
+      errorElement: <ErrorPage></ErrorPage>,
     },
     {
       path: "/login",
-      element: <Login></Login>
+      element: <Login></Login>,
+      errorElement: <ErrorPage></ErrorPage>,
+    },
+    {
+      path: "/dashboard",
+      element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+      errorElement: <ErrorPage></ErrorPage>,
+      children:[
+        {
+          path: "myClass",
+          element: <EnrollClass></EnrollClass>
+        }
+      ]
     }
   ]);
 

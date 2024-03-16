@@ -17,7 +17,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-const verify = async (req, res, next) => {
+const  verifyToken = async (req, res, next) => {
   if (!req.headers.authorization) {
     return res.status(401).send({ message: "unauthorized access" });
   }
@@ -51,6 +51,7 @@ async function run() {
 
     const coursesCollection = client.db("Knack").collection("courses");
     const feedbackCollection = client.db("Knack").collection("review");
+    const userCollection = client.db("Knack").collection("user");
 
     //jwt related apis
     app.post("/jwt", async (req, res) => {
@@ -78,6 +79,66 @@ async function run() {
     app.get("/feedbacks", async (req, res) => {
       const result = await feedbackCollection.find().toArray();
       res.send(result);
+    });
+
+    //user related apis
+    app.post("/users", async (req, res) => {
+      try {
+        const user = req.body;
+        const query = { email: user.email };
+        const existingUser = await userCollection.findOne(query);
+        if (existingUser) {
+          return res.send({ message: "user already exist", insertedId: null });
+        }
+        const result = await userCollection.insertOne(user);
+        res.send(result);
+      } catch {
+        (err) => {
+          res.send(err);
+        };
+      }
+    });
+
+    app.get("/users/admin/:email", verifyToken, async (req, res) => {
+      try {
+        const email = req.params.email;
+        if (email !== req.decoded.email) {
+          return res.status(403).send({ message: "forbidden" });
+        }
+
+        const query = { email: email };
+        const user = await userCollection.findOne(query);
+        let admin = false;
+        if (user) {
+          admin = user?.role === "admin";
+        }
+        res.send({ admin });
+      } catch {
+        (err) => {
+          res.send(err);
+        };
+      }
+    });
+
+    app.get("/users/teacher/:email", verifyToken, async (req, res) => {
+      try {
+        const email = req.params.email;
+        if (email !== req.decoded.email) {
+          return res.status(403).send({ message: "forbidden" });
+        }
+
+        const query = { email: email };
+        const user = await userCollection.findOne(query);
+        let teacher = false;
+        if (user) {
+          teacher = user?.role === "teacher" && user?.accept === "accepted";
+        }
+        res.send({ teacher });
+      } catch {
+        (err) => {
+          res.send(err);
+        };
+      }
     });
 
     // Send a ping to confirm a successful connection

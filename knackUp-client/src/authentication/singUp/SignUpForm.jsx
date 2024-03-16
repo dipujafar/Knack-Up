@@ -14,12 +14,14 @@ import { toast } from "react-toastify";
 import useAuth from "../../hook/useAuth";
 import { imageUpload } from "../../api/image";
 import { auth } from "../../firebase/firebase.config";
+import useAxiosPublic from "../../hook/useAxiosPublic";
 
 const SignUpForm = () => {
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
   const { signUp } = useAuth();
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
   const {
     register,
     handleSubmit,
@@ -44,8 +46,17 @@ const SignUpForm = () => {
           photoURL: imageData?.data?.url,
         })
           .then(() => {
-            toast.success("Successfully Sign Up");
-            navigate("/");
+            const userInfo = {
+              email,
+              name,
+            };
+
+            axiosPublic.post("/users", userInfo).then((res) => {
+              if (res.data.insertedId) {
+                toast.success("Successfully sing Up");
+                navigate("/");
+              }
+            }).catch(error => setError(error.message))
           })
           .catch((err) => {
             setError(err?.message);

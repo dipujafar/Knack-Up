@@ -10,6 +10,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import useAuth from "../../hook/useAuth";
 import googleLogo from "../../assets/img/googleLogo2.png";
+import useAxiosPublic from "../../hook/useAxiosPublic";
 
 const LoginForm = () => {
   const [show, setShow] = useState(false);
@@ -17,6 +18,7 @@ const LoginForm = () => {
   const { signIn, singInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosPublic = useAxiosPublic();
 
   const {
     register,
@@ -37,16 +39,22 @@ const LoginForm = () => {
       });
   };
 
-  const handleGoogleSing = () =>{
+  const handleGoogleSing = () => {
     singInWithGoogle()
-  .then(() => {
-    toast.success("Success Login with Google");
-    navigate(location?.state ? location.state : "/");
-  })
-  .catch((error) => {
-    setError(error.message);
-  });
-  }
+      .then((result) => {
+        const userInfo = {
+          email: result.user.email,
+          name: result.user.displayName,
+        };
+        axiosPublic.post("/users", userInfo).then(() => {
+          toast.success("Success Login with Google");
+          navigate(location?.state ? location.state : "/");
+        });
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
 
   return (
     <div className="md:w-3/4 bg-black bg-transparent bg-opacity-40  mx-auto border  rounded shadow-lg shadow-gray-300 p-5 text-white">
@@ -119,7 +127,10 @@ const LoginForm = () => {
       </form>
       <fieldset className="space-y-2 border-t mt-2">
         <legend className="text-center px-2">OR</legend>
-        <button onClick={handleGoogleSing} className="flex items-center btn bg-gradient-to-r from-cyan-800 to-cyan-700 text-white w-full">
+        <button
+          onClick={handleGoogleSing}
+          className="flex items-center btn bg-gradient-to-r from-cyan-800 to-cyan-700 text-white w-full"
+        >
           <img src={googleLogo} className="w-10" /> Login With Google
         </button>
       </fieldset>

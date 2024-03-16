@@ -1,17 +1,20 @@
-import { Link, NavLink } from "react-router-dom";
-import logo from "../../assets/img/knackUp.png";
-import Container from "./Container";
-import useAuth from "../../hook/useAuth";
-import profile from "../../assets/img/profile.png";
 import { useRef, useState } from "react";
+
+import { Link, useNavigate } from "react-router-dom";
+import DashboardLinks from "./DashboardLinks";
+import logo from "../../assets/img/knackUp.png";
+import { toast } from "react-toastify";
 import { FaHome } from "react-icons/fa";
 import { FiLogIn } from "react-icons/fi";
 import { CgLogOut } from "react-icons/cg";
-import { toast } from "react-toastify";
+import profile from "../../assets/img/profile.png";
+import useAuth from "../../hook/useAuth";
+import Container from "../../components/shared/Container";
 
-const Navbar = () => {
+const DashboardNav = () => {
   const { user, logOut } = useAuth();
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const menuRef = useRef();
   const imgRef = useRef();
 
@@ -22,56 +25,11 @@ const Navbar = () => {
   });
 
   const handleLogout = () => {
-    logOut().then(()=>toast("Successfully Logout"))
-
+    logOut().then(() =>{
+      navigate("/login")
+      toast("Successfully Logout")
+    } );
   };
-
-  const navLinks = (
-    <>
-      <li>
-        <NavLink
-          to="/"
-          className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "active" : ""
-          }
-        >
-          Home
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/allClasses"
-          className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "active" : ""
-          }
-        >
-          All classes
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/tech"
-          className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "active" : ""
-          }
-        >
-          Tech on Knack
-        </NavLink>
-      </li>
-      {user && (
-        <li>
-          <NavLink
-            to="/dashboard"
-            className={({ isActive, isPending }) =>
-              isPending ? "pending" : isActive ? "active" : ""
-            }
-          >
-            Dashboard
-          </NavLink>
-        </li>
-      )}
-    </>
-  );
   return (
     <Container>
       <div className="navbar bg-transparent text-white">
@@ -101,7 +59,7 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-cyan-600 rounded-box w-52 uppercase"
             >
-              {navLinks}
+              <DashboardLinks></DashboardLinks>
             </ul>
           </div>
           <Link to="/" className="btn  btn-ghost text-xl">
@@ -112,7 +70,9 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 uppercase">{navLinks}</ul>
+          <ul className="menu menu-horizontal px-1 uppercase">
+            <DashboardLinks></DashboardLinks>
+          </ul>
         </div>
         <div className="navbar-end">
           {user ? (
@@ -181,4 +141,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default DashboardNav;
