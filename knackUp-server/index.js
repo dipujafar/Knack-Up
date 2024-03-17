@@ -52,6 +52,7 @@ async function run() {
     const coursesCollection = client.db("Knack").collection("courses");
     const feedbackCollection = client.db("Knack").collection("review");
     const userCollection = client.db("Knack").collection("user");
+    const teacherReqCollection = client.db("Knack").collection("teacherReq");
 
     // middleware
 
@@ -84,7 +85,11 @@ async function run() {
 
     // courses related apis
     app.get("/classes", async (req, res) => {
-      const result = await coursesCollection.find().toArray();
+      const search = req?.query?.search;
+      const query = {
+        title: {$regex: search, $options: "i"}
+      }
+      const result = await coursesCollection.find(query).toArray();
       res.send(result);
     });
 
@@ -97,7 +102,11 @@ async function run() {
     //user related apis
     app.get("/users", verifyToken, verifyAdmin, async (req, res) => {
       try {
-        const result = await userCollection.find().toArray();
+        const search = req?.query?.search;
+        const query = {
+          email: {$regex: search, $options: "i"}
+        }
+        const result = await userCollection.find(query).toArray();
         res.send(result);
       } catch {
         (err) => {
@@ -165,6 +174,18 @@ async function run() {
     });
 
     // teacher related apis
+
+    app.post("/users/teacher", verifyToken, async(req, res)=>{
+      try{
+      const reqData = req?.body;
+      const result = await teacherReqCollection.insertOne(reqData);
+      res.send(result);
+      }
+      catch{err=>{
+        res.send(err);
+      }}
+    })
+
     app.get("/users/teacher/:email", verifyToken, async (req, res) => {
       try {
         const email = req.params.email;

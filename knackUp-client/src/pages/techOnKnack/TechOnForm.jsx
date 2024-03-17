@@ -1,14 +1,57 @@
 import { useForm } from "react-hook-form";
 import { FaCamera } from "react-icons/fa";
+import { imageUpload } from "../../api/image";
+import useAuth from "../../hook/useAuth";
+import useAxiosSecure from "../../hook/useAxiosSecure";
+import useAdmin from "../../hook/useAdmin";
+import Container from "../../components/shared/Container";
+import { toast } from "react-toastify";
 
 const TechOnForm = () => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const [isAdmin] = useAdmin();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {};
+  const onSubmit = async (data) => {
+    const { name, title, experience, category, image } = data || {};
+
+    const imageFile = image[0];
+    const imageData = await imageUpload(imageFile);
+
+    const reqData = {
+      name,
+      email: user?.email,
+      image: imageData?.data?.url,
+      experience,
+      title,
+      category,
+      status: "pending",
+    };
+
+    const res = await axiosSecure.post("/users/teacher", reqData);
+    if(res?.data?.insertedId){
+      toast("Your request is pending. Please wait for approve");
+    }
+  };
+
+  if (isAdmin) {
+    return (
+      <Container>
+        <div className="text-white min-h-[50vh] flex justify-center items-center">
+          <div>
+          <h1 className="text-3xl text-gray-300 mb-2 text-center">Your Are an Admin </h1>
+          <p className="text-xl text-gray-300  text-center">You are not eligible for the application</p>
+          </div>
+        </div>
+      </Container>
+    );
+  }
+
   return (
     <div className="mt-5 md:mt-10 md:w-3/4 bg-black bg-transparent bg-opacity-50  mx-auto border  rounded shadow-lg shadow-gray-300 p-5 text-white">
       <h1 className="text-2xl font-medium mb-5 uppercase text-center">
@@ -109,7 +152,7 @@ const TechOnForm = () => {
         )}
 
         <button className="w-full btn bg-blue-100 btn-sm">
-          <input type="submit" value="Submit" className="w-full" />
+          <input type="submit" value="Submit for review" className="w-full" />
         </button>
       </form>
     </div>

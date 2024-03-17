@@ -1,10 +1,12 @@
+import { useState } from "react";
 import Container from "../../components/shared/Container";
 import useAxiosSecure from "../../hook/useAxiosSecure";
 import useUsers from "../../hook/useUsers";
 import Swal from "sweetalert2";
 
 const AllUsers = () => {
-  const [users, isLoading, refetch] = useUsers();
+  const [search, setSearch] = useState("")
+  const [users, isLoading, refetch] = useUsers(search);
   const axiosSecure = useAxiosSecure();
 
   if (isLoading) {
@@ -35,17 +37,33 @@ const AllUsers = () => {
           });
           refetch();
         }
-       
       }
     });
   };
 
+  const handleSearch = (e) =>{
+    e.preventDefault();
+    const searchValue = e.target.search.value;
+    setSearch(searchValue);
+    refetch();
+  }
+
   return (
     <div className="text-white">
       <Container>
-        <h2 className="text-3xl font-medium mb-2">
-          Total User : {users.length}
-        </h2>
+        <div className="mb-2 flex flex-col md:flex-row items-center justify-between gap-3">
+          <h2 className="text-3xl font-medium ">Total User : {users.length}</h2>
+          <form onSubmit={handleSearch}>
+            <input
+              type="text"
+              name="search"
+              id=""
+              className="bg-blue-900 p-2 rounded border md:w-96"
+              placeholder="Search via email"
+            />
+            <input type="submit" value="Search" className="btn btn-outline text-white ml-2" />
+          </form>
+        </div>
         <div className="overflow-x-auto bg-gradient-to-r from-sky-950 to-sky-900 rounded">
           <table className="table">
             {/* head */}

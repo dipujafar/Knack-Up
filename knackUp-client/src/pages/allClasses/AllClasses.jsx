@@ -1,5 +1,5 @@
 import useClasses from "../../hook/useClasses";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Aos from "aos";
 import Container from "../../components/shared/Container";
 import TopBanner from "../../components/shared/TopBanner";
@@ -7,11 +7,19 @@ import banner from "../../assets/img/banner7.jpeg";
 import ClassDetails from "./ClassDetails";
 
 const AllClasses = () => {
-  const [classes, isLoading] = useClasses();
+  const [search, setSearch] = useState("");
+  const [classes, isLoading, refetch] = useClasses(search);
 
   useEffect(() => {
     Aos.init();
   }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const searchValue = e.target.search.value;
+    setSearch(searchValue);
+    refetch();
+  };
 
   if (isLoading) {
     return (
@@ -31,6 +39,22 @@ const AllClasses = () => {
         }
       ></TopBanner>
       <Container>
+        <div className="flex justify-center mb-3 text-white">
+          <form onSubmit={handleSearch}>
+            <input
+              type="text"
+              name="search"
+              id=""
+              className="bg-blue-900 p-2 rounded border md:w-96"
+              placeholder="search your favorite class"
+            />
+            <input
+              type="submit"
+              value="Search"
+              className="btn btn-outline text-white ml-2"
+            />
+          </form>
+        </div>
         <div
           id="classes"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
@@ -66,7 +90,9 @@ const AllClasses = () => {
                   <button
                     className=" btn text-white  bg-gradient-to-r from-cyan-700 to-cyan-900"
                     onClick={() =>
-                      document.getElementById(`my_modal_${course?._id}`).showModal()
+                      document
+                        .getElementById(`my_modal_${course?._id}`)
+                        .showModal()
                     }
                   >
                     Details
