@@ -78,12 +78,13 @@ const CheckOutForm = () => {
             date: new Date(),
             cartIds: cart.map(course => course._id),
             courseIds: cart.map(course =>course.courseId),
-            status: "pending" 
+            status: "paid" 
           }
           const res = await axiosSecure.post("/payments", payment);
           refetch();
           if(res?.data?.paymentResult?.insertedId){
             toast.success("Payment Successful");
+            navigate("/dashboard/myClass")
           }
         }
       }

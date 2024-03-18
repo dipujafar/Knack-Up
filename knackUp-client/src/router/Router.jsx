@@ -35,7 +35,7 @@ const Router = createBrowserRouter([
         },
         {
           path: "tech",
-          element: <PrivateRoute><TechOn></TechOn></PrivateRoute> 
+          element: <TechOn></TechOn>
         }
       ]
     },

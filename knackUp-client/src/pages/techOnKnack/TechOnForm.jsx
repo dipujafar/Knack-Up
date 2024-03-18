@@ -8,6 +8,7 @@ import Container from "../../components/shared/Container";
 import { toast } from "react-toastify";
 import useTeacher from "../../hook/useTeacher";
 import useTeacherReq from "../../hook/useTeacherReq";
+import { useNavigate } from "react-router-dom";
 
 const TechOnForm = () => {
   const { user } = useAuth();
@@ -16,6 +17,7 @@ const TechOnForm = () => {
   const  [isTeacher] = useTeacher();
   const [teacherReq] = useTeacherReq();
   const isReq = teacherReq.find(req => req?.email === user?.email) || {};
+  const navigate = useNavigate();
   
   const {
     register,
@@ -63,8 +65,23 @@ const TechOnForm = () => {
       <Container>
         <div className="text-white min-h-[50vh] flex justify-center items-center">
           <div>
-          <h1 className="text-3xl text-gray-300 mb-2 text-center">Your are already a teacher </h1>
+          <h1 className="text-3xl text-gray-300 mb-2 text-center">Your are already a teacher</h1>
           <p className="text-xl text-gray-300  text-center">You are not eligible for the application</p>
+          </div>
+        </div>
+      </Container>
+    );
+  }
+
+  if(!user){
+    return (
+      <Container>
+        <div className="text-white min-h-[50vh] flex justify-center items-center">
+          <div>
+          <h1 className="text-3xl text-gray-300 mb-4 text-center">Please login and apply for tech on knack </h1>
+          <div className="flex items-center justify-center">
+          <p onClick={()=>navigate("/login")} className="btn bg-gradient-to-r from-cyan-900 to-cyan-700 text-white w-40 ">Login</p>
+          </div>
           </div>
         </div>
       </Container>

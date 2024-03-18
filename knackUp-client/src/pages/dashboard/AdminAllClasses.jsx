@@ -3,7 +3,7 @@ import useClasses from "../../hook/useClasses";
 
 
 const AdminAllClasses = () => {
-    const [classes] = useClasses();
+    const [classes,isLoading] = useClasses();
     console.log(classes);
 
     const handleApprove = () =>{
@@ -12,6 +12,14 @@ const AdminAllClasses = () => {
     
     const handleReject = () =>{
         //
+    }
+
+    if (isLoading) {
+      return (
+        <div className="flex justify-center items-center h-screen">
+          <span className="loading loading-dots loading-lg text-cyan-600"></span>
+        </div>
+      );
     }
     
  

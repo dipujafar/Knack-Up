@@ -7,6 +7,9 @@ import ClassDetails from "../allClasses/ClassDetails";
 
 const PopularCourse = () => {
   const [classes, isLoading] = useClasses();
+  // const max = classes?.reduce(function(prev, current){
+  //   return (prev && prev?.total_enrollment > current?.total_enrollment);
+  // })
 
   useEffect(() => {
     Aos.init();

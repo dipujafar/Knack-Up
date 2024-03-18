@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import useCart from "../../../hook/useCart";
@@ -45,7 +46,7 @@ const Cart = () => {
               <title>{user?.displayName}'s Course Cart</title>
           </Helmet>
         <div className="flex justify-evenly mb-4">
-          <h1 className="text-3xl"> Items: {cart.length}</h1>
+          <h1 className="text-3xl"> Classes: {cart.length}</h1>
           <h1 className="text-3xl"> TotalPrice: ${totalPrice.toFixed(2)}</h1>
           <button disabled={!cart.length} className="btn btn-outline btn-sm btn-info">
           <Link to='/dashboard/payment'>

@@ -332,7 +332,7 @@ async function run() {
 
     // cart related apis
 
-    app.get("/cart/:email",verifyToken, async (req, res) => {
+    app.get("/cart/:email", verifyToken, async (req, res) => {
       try {
         const email = req?.params?.email;
         const query = { email: email };
@@ -357,40 +357,43 @@ async function run() {
       }
     });
 
-    app.delete("/cart/:id",verifyToken,async(req,res)=>{
-      try{
+    app.delete("/cart/:id", verifyToken, async (req, res) => {
+      try {
         const id = req?.params?.id;
-        const query = {_id: new ObjectId(id)};
+        const query = { _id: new ObjectId(id) };
         const result = await cartCollection.deleteOne(query);
         res.send(result);
+      } catch {
+        (err) => {
+          res.send(err);
+        };
       }
-      catch{err=>{
-        res.send(err);
-      }}
-    })
+    });
 
-      // payment intent
-      app.post("/create-payment-intent", async (req, res) => {
-        try{
+    // payment intent
+    app.post("/create-payment-intent", async (req, res) => {
+      try {
         const { price } = req.body;
         const amount = parseInt(price * 100);
-  
+
         const paymentIntent = await stripe.paymentIntents.create({
           amount: amount,
           currency: "usd",
           payment_method_types: ["card"],
         });
-  
+
         res.send({
           clientSecret: paymentIntent.client_secret,
-        });}
-        catch{err=>{
+        });
+      } catch {
+        (err) => {
           res.send(err);
-        }}
-      });
+        };
+      }
+    });
 
-      app.post("/payments", verifyToken, async (req, res) => {
-        try{
+    app.post("/payments", verifyToken, async (req, res) => {
+      try {
         const payment = req.body;
         const paymentResult = await paymentsCollection.insertOne(payment);
 
@@ -399,14 +402,44 @@ async function run() {
             $in: payment?.cartIds?.map((id) => new ObjectId(id)),
           },
         };
-  
+
         const deleteResult = await cartCollection.deleteMany(query);
-        res.send({paymentResult, deleteResult});
+        res.send({ paymentResult, deleteResult });
+      } catch {
+        (err) => {
+          res.send(err);
+        };
       }
-      catch{err=>{
-        res.send(err);
-      }}
-      })
+    });
+
+    app.get("/payment/:email", async (req, res) => {
+      try {
+        const email = req?.params?.email;
+        const result = await paymentsCollection
+          .aggregate([
+            {
+              $unwind: "$courseIds",
+            },
+          ])
+          .toArray();
+
+        const myCls = result.filter((res) => res.email === email);
+
+        const query = {
+          _id: {
+            $in: myCls?.map((cls) => new ObjectId(cls?.courseIds)),
+          },
+        };
+
+        const myCourse = await coursesCollection.find(query).toArray();
+
+        res.send(myCourse);
+      } catch {
+        (err) => {
+          res.send(err);
+        };
+      }
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
