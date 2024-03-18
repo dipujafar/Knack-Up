@@ -23,17 +23,19 @@ const AdminAllClasses = () => {
             </h2>
             {<div className="overflow-x-auto bg-gradient-to-r from-sky-950 to-sky-900 rounded">
               <table className="table">
-                 head 
+
                 <thead>
                   <tr>
-                    <th></th>
+                    <th>#</th>
                     <th className="text-white">Title</th>
-                    <th className="text-white">Experience</th>
-                    <th className="text-white">Title</th>
-                    <th className="text-white">Category</th>
+                    <th className="text-white">Image</th>
+                    <th className="text-white">Instructor</th>
+                    <th className="text-white">Email</th>
+                    <th className="text-white">Short Description</th>
+                    <th className="text-white">Price</th>
                     <th className="text-white">Status</th>
-                    <th></th>
-                    <th></th>
+                    <th>Action</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 {classes?.map((course, inx) => (
@@ -45,16 +47,19 @@ const AdminAllClasses = () => {
                       <td>
                         <div className="flex items-center gap-3">
                           <div className="avatar">
-                            <div className="mask mask-squircle w-12 h-12">
+                            <div className="mask mask-squircle w-16 h-16">
                               <img src={course?.image} alt="userProfile" />
                             </div>
                           </div>
                         </div>
                       </td>
-                      <td>{course?.name}</td>
+                      <td>{course?.instructor}</td>
                       <td>{course?.email}</td>
-                      <td>{course?.price}</td>
                       <td>{course?.short_description}</td>
+                      <td>${course?.price}</td>
+                      <td>{course?.status}</td>
+                    
+                      
                       <td>
                         {course?.status === "pending" ? (
                           <button onClick={()=>handleApprove(course?.email)} className="btn btn-sm bg-gradient-to-r from-cyan-950 to-sky-900 rounded text-white">

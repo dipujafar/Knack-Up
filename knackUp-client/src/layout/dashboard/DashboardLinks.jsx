@@ -1,14 +1,13 @@
 import { NavLink } from "react-router-dom";
 import useAdmin from "../../hook/useAdmin";
 import useTeacher from "../../hook/useTeacher";
-import useStudent from "../../hook/useStudent";
+
+import useAuth from "../../hook/useAuth";
 
 const DashboardLinks = () => {
   const [isAdmin] = useAdmin();
   const [isTeacher] = useTeacher();
-  const [isStudent] = useStudent();
-  console.log(isTeacher)
-  console.log(isStudent)
+  const {user} = useAuth();
   if (isAdmin) {
     return (
       <>
@@ -93,7 +92,7 @@ const DashboardLinks = () => {
     );
   }
   
- if(isStudent) {
+ if(user) {
     return (
       <>
         <li>
@@ -104,6 +103,16 @@ const DashboardLinks = () => {
             }
           >
             Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/dashboard/cart"
+            className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "active" : ""
+            }
+          >
+            My Cart
           </NavLink>
         </li>
         <li>

@@ -73,11 +73,11 @@ const AllUsers = () => {
             {/* head */}
             <thead>
               <tr>
-                <th></th>
+                <th>#</th>
                 <th className="text-white">User</th>
                 <th className="text-white">Email</th>
                 <th className="text-white">Role</th>
-                <th></th>
+                <th>Action</th>
               </tr>
             </thead>
             {users?.map((user, inx) => (

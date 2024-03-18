@@ -6,7 +6,6 @@ import useTeacherReq from "../../hook/useTeacherReq";
 const TeacherRequest = () => {
   const [teacherReq, isLoading, refetch] = useTeacherReq();
   const axiosSecure = useAxiosSecure();
-  console.log(teacherReq);
 
   const handleApprove = async (email) =>{
     Swal.fire({
@@ -77,14 +76,14 @@ const TeacherRequest = () => {
             {/* head */}
             <thead>
               <tr>
-                <th></th>
+                <th>#</th>
                 <th className="text-white">Candidate</th>
                 <th className="text-white">Experience</th>
                 <th className="text-white">Title</th>
                 <th className="text-white">Category</th>
                 <th className="text-white">Status</th>
-                <th></th>
-                <th></th>
+                <th>Action</th>
+                <th>Action</th>
               </tr>
             </thead>
             {teacherReq?.map((req, inx) => (

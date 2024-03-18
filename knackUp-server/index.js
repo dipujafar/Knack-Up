@@ -1,11 +1,14 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const app = express();
 const port = process.env.PORT || 5000;
+const stripe = require("stripe")(
+  "sk_test_51OGEC6IrnYNwXzbS1rlv2eBDSOONSDc6lKiHAgxIu9zzIZfupoj6JKdg2zXiCwXOp3mjnhAaT8EEuUNuqapE8gRz00GeudZOFH"
+);
 
 // middleware
 app.use(
@@ -53,6 +56,8 @@ async function run() {
     const feedbackCollection = client.db("Knack").collection("review");
     const userCollection = client.db("Knack").collection("user");
     const teacherReqCollection = client.db("Knack").collection("teacherReq");
+    const cartCollection = client.db("Knack").collection("cart");
+    const paymentsCollection = client.db("Knack").collection("payments");
 
     // middleware
 
@@ -84,13 +89,30 @@ async function run() {
     });
 
     // courses related apis
-    app.get("/classes", async (req, res) => {
-      const search = req?.query?.search;
-      const query = {
-        title: {$regex: search, $options: "i"}
+    app.get("/classes/:search", async (req, res) => {
+      try {
+        const search = req?.params?.search;
+        const query = {
+          title: { $regex: search, $options: "i" },
+        };
+        const result = await coursesCollection.find(query).toArray();
+        res.send(result);
+      } catch {
+        (err) => {
+          res.send(err);
+        };
       }
-      const result = await coursesCollection.find(query).toArray();
-      res.send(result);
+    });
+
+    app.get("/classes", async (req, res) => {
+      try {
+        const result = await coursesCollection.find().toArray();
+        res.send(result);
+      } catch {
+        (err) => {
+          res.send(err);
+        };
+      }
     });
 
     //feedback related apis
@@ -104,8 +126,8 @@ async function run() {
       try {
         const search = req?.query?.search;
         const query = {
-          email: {$regex: search, $options: "i"}
-        }
+          email: { $regex: search, $options: "i" },
+        };
         const result = await userCollection.find(query).toArray();
         res.send(result);
       } catch {
@@ -164,7 +186,11 @@ async function run() {
             role: "admin",
           },
         };
-        const result = await userCollection.updateOne(query, updateDoc, options);
+        const result = await userCollection.updateOne(
+          query,
+          updateDoc,
+          options
+        );
         res.send(result);
       } catch {
         (err) => {
@@ -175,71 +201,93 @@ async function run() {
 
     // teacher related apis
 
-    app.get("/users/TeacherReq", verifyToken, async(req, res)=>{
+    app.get("/users/TeacherReq", verifyToken, async (req, res) => {
       const result = await teacherReqCollection.find().toArray();
       res.send(result);
-    })
-
-    app.post("/users/teacherReq", verifyToken, async(req, res)=>{
-      try{
-      const reqData = req?.body;
-      const result = await teacherReqCollection.insertOne(reqData);
-      res.send(result);
-      }
-      catch{err=>{
-        res.send(err);
-      }}
     });
 
-    app.put("/users/teacherReq/:email", verifyToken, verifyAdmin, async(req, res)=>{
-      try{
-      const email = req?.params?.email;
-      const query = {email: email};
-      const options = { upsert: true };
-      const updateRole = {
-        $set: {
-          role: "teacher",
-        },
-      };
+    app.post("/users/teacherReq", verifyToken, async (req, res) => {
+      try {
+        const reqData = req?.body;
+        const result = await teacherReqCollection.insertOne(reqData);
+        res.send(result);
+      } catch {
+        (err) => {
+          res.send(err);
+        };
+      }
+    });
 
-      const userUpdate = await userCollection.updateOne(query, updateRole, options);
-      
-      const updateReq = {
-        $set: {
-          status: "accepted"
+    app.put(
+      "/users/teacherReq/:email",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        try {
+          const email = req?.params?.email;
+          const query = { email: email };
+          const options = { upsert: true };
+          const updateRole = {
+            $set: {
+              role: "teacher",
+            },
+          };
+
+          const userUpdate = await userCollection.updateOne(
+            query,
+            updateRole,
+            options
+          );
+
+          const updateReq = {
+            $set: {
+              status: "accepted",
+            },
+          };
+
+          const reqUpdate = await teacherReqCollection.updateOne(
+            query,
+            updateReq,
+            options
+          );
+          res.send({ userUpdate, reqUpdate });
+        } catch {
+          (err) => {
+            res.send(err);
+          };
         }
       }
+    );
 
-      const reqUpdate = await teacherReqCollection.updateOne(query, updateReq, options);
-      res.send({userUpdate, reqUpdate});
-      
+    app.put(
+      "/users/teacherReq/reject/:email",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        try {
+          const email = req?.params?.email;
+          const query = { email: email };
+          const options = { upsert: true };
+          const updateReq = {
+            $set: {
+              status: "rejected",
+            },
+          };
+
+          const result = await teacherReqCollection.updateOne(
+            query,
+            updateReq,
+            options
+          );
+          res.send(result);
+        } catch {
+          (err) => {
+            res.send(err);
+          };
+        }
       }
-      catch{err=>{
-        res.send(err);
-      }}
-    });
+    );
 
-    app.put("/users/teacherReq/reject/:email", verifyToken, verifyAdmin, async(req, res)=>{
-      try{
-        const email = req?.params?.email;
-        const query = {email: email};
-        const options = { upsert: true };
-        const updateReq = {
-          $set: {
-            status: "rejected"
-          },
-        };
-
-        const result = await teacherReqCollection.updateOne(query, updateReq, options);
-        res.send(result);
-
-      }
-      catch{err=>{
-        res.send(err)
-      }}
-    })
-
-   
     app.get("/users/teacher/:email", verifyToken, async (req, res) => {
       try {
         const email = req.params.email;
@@ -261,26 +309,104 @@ async function run() {
       }
     });
 
-    app.get("/users/student/:email", verifyToken, async (req, res) => {
-      try {
-        const email = req.params.email;
-        if (email !== req.decoded.email) {
-          return res.status(403).send({ message: "forbidden" });
-        }
+    // app.get("/users/student/:email", verifyToken, async (req, res) => {
+    //   try {
+    //     const email = req.params.email;
+    //     if (email !== req.decoded.email) {
+    //       return res.status(403).send({ message: "forbidden" });
+    //     }
 
+    //     const query = { email: email };
+    //     const user = await userCollection.findOne(query);
+    //     let student = false;
+    //     if (user) {
+    //       student = user?.role === "student";
+    //     }
+    //     res.send({ student });
+    //   } catch {
+    //     (err) => {
+    //       res.send(err);
+    //     };
+    //   }
+    // });
+
+    // cart related apis
+
+    app.get("/cart/:email",verifyToken, async (req, res) => {
+      try {
+        const email = req?.params?.email;
         const query = { email: email };
-        const user = await userCollection.findOne(query);
-        let student = false;
-        if (user) {
-          student = user?.role === "student";
-        }
-        res.send({ student });
+        const result = await cartCollection.find(query).toArray();
+        res.send(result);
       } catch {
         (err) => {
           res.send(err);
         };
       }
     });
+
+    app.post("/cart", verifyToken, async (req, res) => {
+      try {
+        const cartData = req?.body;
+        const result = await cartCollection.insertOne(cartData);
+        res.send(result);
+      } catch {
+        (err) => {
+          res.send(err);
+        };
+      }
+    });
+
+    app.delete("/cart/:id",verifyToken,async(req,res)=>{
+      try{
+        const id = req?.params?.id;
+        const query = {_id: new ObjectId(id)};
+        const result = await cartCollection.deleteOne(query);
+        res.send(result);
+      }
+      catch{err=>{
+        res.send(err);
+      }}
+    })
+
+      // payment intent
+      app.post("/create-payment-intent", async (req, res) => {
+        try{
+        const { price } = req.body;
+        const amount = parseInt(price * 100);
+  
+        const paymentIntent = await stripe.paymentIntents.create({
+          amount: amount,
+          currency: "usd",
+          payment_method_types: ["card"],
+        });
+  
+        res.send({
+          clientSecret: paymentIntent.client_secret,
+        });}
+        catch{err=>{
+          res.send(err);
+        }}
+      });
+
+      app.post("/payments", verifyToken, async (req, res) => {
+        try{
+        const payment = req.body;
+        const paymentResult = await paymentsCollection.insertOne(payment);
+
+        const query = {
+          _id: {
+            $in: payment?.cartIds?.map((id) => new ObjectId(id)),
+          },
+        };
+  
+        const deleteResult = await cartCollection.deleteMany(query);
+        res.send({paymentResult, deleteResult});
+      }
+      catch{err=>{
+        res.send(err);
+      }}
+      })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });

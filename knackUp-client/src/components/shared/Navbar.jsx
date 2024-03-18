@@ -10,17 +10,19 @@ import { CgLogOut } from "react-icons/cg";
 import { toast } from "react-toastify";
 import useAdmin from "../../hook/useAdmin";
 import useTeacher from "../../hook/useTeacher";
-import useStudent from "../../hook/useStudent";
+import { BsCart4 } from "react-icons/bs";
+import useCart from "../../hook/useCart";
+
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [open, setOpen] = useState(false);
   const [isAdmin] = useAdmin();
   const [isTeacher] = useTeacher();
-  const [isStudent] = useStudent();
+  const [cart] = useCart();
   const menuRef = useRef();
   const imgRef = useRef();
-  console.log(isStudent);
+
   window.addEventListener("click", (e) => {
     if (e.target !== menuRef.current && e.target !== imgRef.current) {
       setOpen(false);
@@ -86,8 +88,10 @@ const Navbar = () => {
             Dashboard
           </NavLink>
         </li>
+     
       )}
-      {user && isStudent && (
+      {user && !isAdmin && !isTeacher && (
+        <>
         <li>
           <NavLink
             to="/dashboard/myClass"
@@ -98,6 +102,17 @@ const Navbar = () => {
             Dashboard
           </NavLink>
         </li>
+           <li className="text-xl" >
+           <NavLink
+             to="/dashboard/cart"
+             className={({ isActive, isPending }) =>
+               isPending ? "pending" : isActive ? "active" : ""
+             }
+           >
+             <BsCart4 /> <sup className="bg-sky-100 text-black text- rounded-full p-2">+{cart?.length}</sup>
+           </NavLink>
+         </li>
+         </>
       )}
     </>
   );

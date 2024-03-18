@@ -1,6 +1,34 @@
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../hook/useAuth";
+import useAxiosSecure from "../../hook/useAxiosSecure";
+import { toast } from "react-toastify";
+import useCart from "../../hook/useCart";
+
 /* eslint-disable react/prop-types */
 const ClassDetails = ({ course }) => {
-  console.log(course);
+  const {user} = useAuth();
+  const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
+  const [ , , refetch] = useCart();
+  const handleAddCart = async course =>{
+    console.log(course)
+   
+    const courseData = {
+      courseId: course?._id,
+      title: course?.title,
+      instructor: course?.instructor,
+      instructor_email: course?.email,
+      email: user?.email,
+      price: course?.price,
+      image: course?.image
+    }
+
+     const res = await axiosSecure.post('/cart', courseData);
+     if(res?.data?.insertedId){
+      toast.success("Successfully added your cart");
+      refetch();
+     }
+  }
   return (
     <div className="modal-box bg-cyan-900">
       <div className="card bg-transparent ">
@@ -21,7 +49,14 @@ const ClassDetails = ({ course }) => {
       <div className="modal-action">
         <form method="dialog">
           {/* if there is a button in form, it will close the modal */}
-          <button className="btn mr-2  text-white bg-gradient-to-r from-cyan-600 to-cyan-900" >Pay & Enroll</button>
+          {
+            user 
+            ?
+            <button onClick={()=> handleAddCart(course)} className="btn mr-2  text-white bg-gradient-to-r from-cyan-600 to-cyan-900" >Add to cart</button>
+            :
+            <button onClick={()=>navigate('/login')} className="btn mr-2  text-white bg-gradient-to-r from-cyan-600 to-cyan-900" >Add to cart</button>
+          }
+        
           <button className="btn btn-outline  btn-error">Close</button>
         </form>
       </div>
