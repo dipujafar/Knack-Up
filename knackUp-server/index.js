@@ -175,7 +175,12 @@ async function run() {
 
     // teacher related apis
 
-    app.post("/users/teacher", verifyToken, async(req, res)=>{
+    app.get("/users/TeacherReq", verifyToken, async(req, res)=>{
+      const result = await teacherReqCollection.find().toArray();
+      res.send(result);
+    })
+
+    app.post("/users/teacherReq", verifyToken, async(req, res)=>{
       try{
       const reqData = req?.body;
       const result = await teacherReqCollection.insertOne(reqData);
@@ -184,8 +189,57 @@ async function run() {
       catch{err=>{
         res.send(err);
       }}
+    });
+
+    app.put("/users/teacherReq/:email", verifyToken, verifyAdmin, async(req, res)=>{
+      try{
+      const email = req?.params?.email;
+      const query = {email: email};
+      const options = { upsert: true };
+      const updateRole = {
+        $set: {
+          role: "teacher",
+        },
+      };
+
+      const userUpdate = await userCollection.updateOne(query, updateRole, options);
+      
+      const updateReq = {
+        $set: {
+          status: "accepted"
+        }
+      }
+
+      const reqUpdate = await teacherReqCollection.updateOne(query, updateReq, options);
+      res.send({userUpdate, reqUpdate});
+      
+      }
+      catch{err=>{
+        res.send(err);
+      }}
+    });
+
+    app.put("/users/teacherReq/reject/:email", verifyToken, verifyAdmin, async(req, res)=>{
+      try{
+        const email = req?.params?.email;
+        const query = {email: email};
+        const options = { upsert: true };
+        const updateReq = {
+          $set: {
+            status: "rejected"
+          },
+        };
+
+        const result = await teacherReqCollection.updateOne(query, updateReq, options);
+        res.send(result);
+
+      }
+      catch{err=>{
+        res.send(err)
+      }}
     })
 
+   
     app.get("/users/teacher/:email", verifyToken, async (req, res) => {
       try {
         const email = req.params.email;

@@ -5,7 +5,7 @@ import useUsers from "../../hook/useUsers";
 import Swal from "sweetalert2";
 
 const AllUsers = () => {
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState("");
   const [users, isLoading, refetch] = useUsers(search);
   const axiosSecure = useAxiosSecure();
 
@@ -41,12 +41,12 @@ const AllUsers = () => {
     });
   };
 
-  const handleSearch = (e) =>{
+  const handleSearch = (e) => {
     e.preventDefault();
     const searchValue = e.target.search.value;
     setSearch(searchValue);
     refetch();
-  }
+  };
 
   return (
     <div className="text-white">
@@ -61,7 +61,11 @@ const AllUsers = () => {
               className="bg-blue-900 p-2 rounded border md:w-96"
               placeholder="Search via email"
             />
-            <input type="submit" value="Search" className="btn btn-outline text-white ml-2" />
+            <input
+              type="submit"
+              value="Search"
+              className="btn btn-outline text-white ml-2"
+            />
           </form>
         </div>
         <div className="overflow-x-auto bg-gradient-to-r from-sky-950 to-sky-900 rounded">
@@ -99,7 +103,11 @@ const AllUsers = () => {
 
                   <th>
                     {user?.role === "admin" ? (
-                      ""
+                      <button
+                        className="btn btn-disabled btn-sm bg-gradient-to-r from-cyan-950 to-sky-900 rounded text-white" 
+                      >
+                        Make Admin
+                      </button>
                     ) : (
                       <button
                         onClick={() => handleAdmin(user)}

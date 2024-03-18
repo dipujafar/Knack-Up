@@ -8,13 +8,19 @@ import { FaHome } from "react-icons/fa";
 import { FiLogIn } from "react-icons/fi";
 import { CgLogOut } from "react-icons/cg";
 import { toast } from "react-toastify";
+import useAdmin from "../../hook/useAdmin";
+import useTeacher from "../../hook/useTeacher";
+import useStudent from "../../hook/useStudent";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [open, setOpen] = useState(false);
+  const [isAdmin] = useAdmin();
+  const [isTeacher] = useTeacher();
+  const [isStudent] = useStudent();
   const menuRef = useRef();
   const imgRef = useRef();
-
+  console.log(isStudent);
   window.addEventListener("click", (e) => {
     if (e.target !== menuRef.current && e.target !== imgRef.current) {
       setOpen(false);
@@ -22,8 +28,7 @@ const Navbar = () => {
   });
 
   const handleLogout = () => {
-    logOut().then(()=>toast("Successfully Logout"))
-
+    logOut().then(() => toast("Successfully Logout"));
   };
 
   const navLinks = (
@@ -58,10 +63,34 @@ const Navbar = () => {
           Tech on Knack
         </NavLink>
       </li>
-      {user && (
+      {user && isAdmin && (
         <li>
           <NavLink
-            to="/dashboard"
+            to="/dashboard/users"
+            className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "active" : ""
+            }
+          >
+            Dashboard
+          </NavLink>
+        </li>
+      )}
+      {user && isTeacher && (
+        <li>
+          <NavLink
+            to="/dashboard/addClass"
+            className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "active" : ""
+            }
+          >
+            Dashboard
+          </NavLink>
+        </li>
+      )}
+      {user && isStudent && (
+        <li>
+          <NavLink
+            to="/dashboard/myClass"
             className={({ isActive, isPending }) =>
               isPending ? "pending" : isActive ? "active" : ""
             }

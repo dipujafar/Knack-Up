@@ -24,7 +24,7 @@ const DashboardLinks = () => {
         </li>
         <li>
           <NavLink
-            to="/teacherReq"
+            to="/dashboard/teacherReq"
             className={({ isActive, isPending }) =>
               isPending ? "pending" : isActive ? "active" : ""
             }
@@ -44,7 +44,7 @@ const DashboardLinks = () => {
         </li>
         <li>
           <NavLink
-            to="/allClass"
+            to="/dashboard/allClasses"
             className={({ isActive, isPending }) =>
               isPending ? "pending" : isActive ? "active" : ""
             }

@@ -6,11 +6,13 @@ import Login from "../authentication/login/Login";
 import AllClasses from "../pages/allClasses/AllClasses";
 import TechOn from "../pages/techOnKnack/TechOn";
 import PrivateRoute from "./PrivateRoute";
-
-import EnrollClass from "../pages/dashboard/EnrollClass";
 import Dashboard from "../layout/dashboard/Dashboard";
 import ErrorPage from "../pages/ErrorPage";
 import AllUsers from "../pages/dashboard/AllUsers";
+import TeacherRequest from "../pages/dashboard/TeacherRequest";
+import AdminAllClasses from "../pages/dashboard/AdminAllClasses";
+import AddClass from "../pages/dashboard/teacherPage/AddClass";
+import EnrollClass from "../pages/dashboard/studentPage/EnrollClass";
 
 
 
@@ -57,6 +59,18 @@ const Router = createBrowserRouter([
         {
           path:"users",
           element: <AllUsers></AllUsers>
+        },
+        {
+          path: "teacherReq",
+          element: <TeacherRequest></TeacherRequest>
+        },
+        {
+          path: "allClasses",
+          element: <AdminAllClasses></AdminAllClasses>
+        },
+        {
+          path: "addClass",
+          element: <AddClass></AddClass>
         }
       ]
     }
