@@ -12,12 +12,10 @@ const useClasses = (search) => {
     queryFn: async () => {
       if (search) {
         const res = await axiosPublic.get(`/classes/${search}`);
-        const acceptClass = res?.data.filter(course=> course?.status === "accepted");
-        return acceptClass;
+        return res?.data;
       } else {
         const res = await axiosPublic.get(`/classes`);
-        const acceptClass = res?.data.filter(course=> course?.status === "accepted");
-        return acceptClass;
+        return res?.data;
       }
     },
   });

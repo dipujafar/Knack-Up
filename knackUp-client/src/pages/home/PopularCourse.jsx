@@ -33,7 +33,7 @@ const PopularCourse = () => {
         {classes?.slice(0, 8)?.map((course) => (
           <div
             key={course?._id}
-            className="card h-96  bg-cyan-800   opacity-90 text-gray-100 shadow-2xl"
+            className="card h-96  bg-cyan-800   opacity-90 text-gray-100 shadow-2xl border-2 border-r-sky-400 border-l-sky-700 border-t-sky-500 border-b-sky-300"
             data-aos="fade-up"
             data-aos-duration="3000"
           >

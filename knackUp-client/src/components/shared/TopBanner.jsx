@@ -11,7 +11,7 @@ const TopBanner = ({ img, title, description, button, to }) => {
       <div className="hero-content text-center text-neutral-content">
         <div className="absolute md:w-1/2  flex items-center h-full   left-0 bottom-0 bg-gradient-to-r from-[#050505] to-[rgba(21, 21, 21, 0.00]">
           <div className="text-white  space-y-3 md:pl-12 px-1">
-            <h1 className="lg:text-5xl md:text-3xl text-xl font-medium text-cyan-50 ">
+            <h1 className="lg:text-5xl md:text-3xl text-xl font-medium text-cyan-100 ">
               {title}
             </h1>
             <p>{description}</p>

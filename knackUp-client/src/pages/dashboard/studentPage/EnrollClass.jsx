@@ -25,12 +25,13 @@ const EnrollClass = () => {
             Welcome {user?.displayName}, Ready For Your Next Lesson?
           </h1>
         </div>
+        <hr className="mb-5" />
         {myCourse?.length ? (
           <div className="grid grid-cols-1 gap-5">
             {myCourse.map((cls) => (
               <div
                 key={cls?._id}
-                className="card lg:card-side bg-gradient-to-r from-cyan-700 to-cyan-600 shadow-xl"
+                className="card lg:card-side bg-gradient-to-r from-cyan-700 to-cyan-600 shadow-xl border-4 border-r-sky-400 border-l-sky-700 border-t-sky-500 border-b-sky-300"
               >
                 <figure className="lg:w-1/2">
                   <img

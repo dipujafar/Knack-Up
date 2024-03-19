@@ -1,6 +1,7 @@
 import Container from "./Container";
 import logo from "../../assets/img/knackUp.png";
 import moment from 'moment'
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -8,12 +9,16 @@ const Footer = () => {
       <Container>
         <div className="flex flex-col md:flex-row justify-between items-center">
           <aside>
+            <Link to="/">
             <img src={logo} alt="" className="w-20" />
+            
             <p className="md:text-xl">
               <span className="text-cyan-400">KNACK</span>
+              
               <br />
               Providing enhance skill level since 2024
             </p>
+            </Link>
           </aside>
           <nav>
             <h6 className="footer-title">Social</h6>

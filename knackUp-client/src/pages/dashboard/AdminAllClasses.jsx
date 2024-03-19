@@ -1,10 +1,11 @@
 import Container from "../../components/shared/Container";
-import useClasses from "../../hook/useClasses";
+import useAllClasses from "../../hook/useAllClasses";
+
 
 
 const AdminAllClasses = () => {
-    const [classes,isLoading] = useClasses();
-    console.log(classes);
+    const [allClasses,isLoading] = useAllClasses();
+    console.log(allClasses);
 
     const handleApprove = () =>{
         //
@@ -27,7 +28,7 @@ const AdminAllClasses = () => {
         <div className="text-white">
           <Container>
             <h2 className="text-3xl font-medium ">
-              Total Classes : {classes?.length}
+              Total Classes : {allClasses?.length}
             </h2>
             {<div className="overflow-x-auto bg-gradient-to-r from-sky-950 to-sky-900 rounded">
               <table className="table">
@@ -46,7 +47,7 @@ const AdminAllClasses = () => {
                     <th>Action</th>
                   </tr>
                 </thead>
-                {classes?.map((course, inx) => (
+                {allClasses?.map((course, inx) => (
                   <tbody key={course?._id}>
                     {/* row 1 */}
                     <tr>

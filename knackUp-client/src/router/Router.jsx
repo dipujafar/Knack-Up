@@ -15,6 +15,7 @@ import AddClass from "../pages/dashboard/teacherPage/AddClass";
 import EnrollClass from "../pages/dashboard/studentPage/EnrollClass";
 import Cart from "../pages/dashboard/studentPage/Cart";
 import Payment from "../pages/payment/Payment";
+import TeacherClass from "../pages/dashboard/teacherPage/TeacherClass";
 
 
 
@@ -81,6 +82,10 @@ const Router = createBrowserRouter([
         {
           path: "payment",
           element: <Payment></Payment>
+        },
+        {
+          path: "teacherClass",
+          element: <TeacherClass></TeacherClass>
         }
       ]
     }

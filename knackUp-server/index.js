@@ -13,7 +13,7 @@ const stripe = require("stripe")(
 // middleware
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173", "https://knack-up.web.app"],
     credentials: true,
   })
 );
@@ -71,6 +71,16 @@ async function run() {
       }
       next();
     };
+    const verifyTeacher = async (req, res, next) => {
+      const email = req?.decoded?.email;
+      const query = { email: email };
+      const user = await userCollection.findOne(query);
+      const isAdmin = user?.role === "teacher";
+      if (!isAdmin) {
+        return res.status(403).send({ message: "forbidden" });
+      }
+      next();
+    };
 
     //jwt related apis
     app.post("/jwt", async (req, res) => {
@@ -96,7 +106,8 @@ async function run() {
           title: { $regex: search, $options: "i" },
         };
         const result = await coursesCollection.find(query).toArray();
-        res.send(result);
+        const acceptClass = result?.filter(course=> course?.status === "accepted");
+        res.send(acceptClass);
       } catch {
         (err) => {
           res.send(err);
@@ -107,6 +118,18 @@ async function run() {
     app.get("/classes", async (req, res) => {
       try {
         const result = await coursesCollection.find().toArray();
+        const acceptClass = result?.filter(course=> course?.status === "accepted");
+        res.send(acceptClass);
+      } catch {
+        (err) => {
+          res.send(err);
+        };
+      }
+    });
+
+    app.get("/allClasses",verifyToken, verifyAdmin, async (req, res) => {
+      try {
+        const result = await coursesCollection.find().toArray();
         res.send(result);
       } catch {
         (err) => {
@@ -114,6 +137,19 @@ async function run() {
         };
       }
     });
+
+    app.post("/classes", verifyToken, verifyTeacher, async(req, res)=>{
+      try{
+        const clsData = req?.body;
+        const result = await coursesCollection.insertOne(clsData);
+        res.send(result);
+      }
+      catch {
+        (err) => {
+          res.send(err);
+        };
+      }
+    })
 
     //feedback related apis
     app.get("/feedbacks", async (req, res) => {
@@ -202,8 +238,28 @@ async function run() {
     // teacher related apis
 
     app.get("/users/TeacherReq", verifyToken, async (req, res) => {
+      try{
       const result = await teacherReqCollection.find().toArray();
       res.send(result);
+      }
+      catch {
+        (err) => {
+          res.send(err);
+        };
+      }
+    });
+
+    app.get("/teacherClasses/:email",verifyToken, verifyTeacher, async (req, res) => {
+      try {
+        const email = req?.params?.email;
+        const query = {email: email}
+        const result = await coursesCollection.find(query).toArray();
+        res.send(result);
+      } catch {
+        (err) => {
+          res.send(err);
+        };
+      }
     });
 
     app.post("/users/teacherReq", verifyToken, async (req, res) => {
@@ -309,29 +365,7 @@ async function run() {
       }
     });
 
-    // app.get("/users/student/:email", verifyToken, async (req, res) => {
-    //   try {
-    //     const email = req.params.email;
-    //     if (email !== req.decoded.email) {
-    //       return res.status(403).send({ message: "forbidden" });
-    //     }
-
-    //     const query = { email: email };
-    //     const user = await userCollection.findOne(query);
-    //     let student = false;
-    //     if (user) {
-    //       student = user?.role === "student";
-    //     }
-    //     res.send({ student });
-    //   } catch {
-    //     (err) => {
-    //       res.send(err);
-    //     };
-    //   }
-    // });
-
-    // cart related apis
-
+    // cart related api
     app.get("/cart/:email", verifyToken, async (req, res) => {
       try {
         const email = req?.params?.email;
@@ -412,7 +446,7 @@ async function run() {
       }
     });
 
-    app.get("/payment/:email", async (req, res) => {
+    app.get("/payment/:email", verifyToken, async (req, res) => {
       try {
         const email = req?.params?.email;
         const result = await paymentsCollection

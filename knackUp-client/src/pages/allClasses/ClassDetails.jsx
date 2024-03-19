@@ -3,15 +3,28 @@ import useAuth from "../../hook/useAuth";
 import useAxiosSecure from "../../hook/useAxiosSecure";
 import { toast } from "react-toastify";
 import useCart from "../../hook/useCart";
+import useMyCourse from "../../hook/useMyCourse";
 
 /* eslint-disable react/prop-types */
 const ClassDetails = ({ course }) => {
   const {user} = useAuth();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
+  const [myCourse] = useMyCourse();
+  const [cart] = useCart();
+  console.log(cart)
   const [ , , refetch] = useCart();
   const handleAddCart = async course =>{
-    console.log(course)
+
+    const checkCourse = myCourse?.find(cls => cls?._id === course?._id);
+    if(checkCourse){
+      return toast.error("You already have this class.")
+    }
+
+    const checkCart = cart?.find(cls => cls?.courseId === course?._id);
+    if(checkCart){
+      return toast.error("You already have this class in  your cart.")
+    }
    
     const courseData = {
       courseId: course?._id,

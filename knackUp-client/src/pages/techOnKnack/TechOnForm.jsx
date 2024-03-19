@@ -113,7 +113,7 @@ const TechOnForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Name input */}
         <div className="flex flex-col md:flex-row gap-1 mb-5 ">
-          <label>
+          <label className="md:w-40">
             Full Name <sup className="text-red-600">*</sup> :
           </label>
           <input
@@ -131,7 +131,7 @@ const TechOnForm = () => {
 
         {/* Title input */}
         <div className="flex flex-col md:flex-row gap-1 mb-5 ">
-          <label>
+          <label className="md:w-40">
             Your Title <sup className="text-red-600">*</sup> :
           </label>
           <input
@@ -149,7 +149,7 @@ const TechOnForm = () => {
 
         {/* Experience input */}
         <div className="flex flex-col md:flex-row gap-1 mb-5 ">
-          <label>
+          <label className="md:w-40">
             Experience <sup className="text-red-600">*</sup> :
           </label>
           <select
@@ -167,7 +167,7 @@ const TechOnForm = () => {
 
         {/* Category input */}
         <div className="flex flex-col md:flex-row gap-1 mb-5 ">
-          <label>
+          <label className="md:w-40">
             Category <sup className="text-red-600">*</sup> :
           </label>
           <select

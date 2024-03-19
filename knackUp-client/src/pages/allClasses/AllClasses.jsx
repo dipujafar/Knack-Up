@@ -62,7 +62,7 @@ const AllClasses = () => {
           {classes?.map((course) => (
             <div
               key={course?._id}
-              className="card  group  bg-gradient-to-r from-cyan-700 to-cyan-950 text-white shadow-xl"
+              className="card  group  bg-gradient-to-r from-cyan-700 to-cyan-950 text-white shadow-xl border-2 border-r-sky-400 border-l-sky-700 border-t-sky-500 border-b-sky-300"
               data-aos="fade-up"
               data-aos-duration="3000"
             >
