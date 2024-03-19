@@ -5,10 +5,12 @@ import Container from "../../components/shared/Container";
 import TopBanner from "../../components/shared/TopBanner";
 import banner from "../../assets/img/banner7.jpeg";
 import ClassDetails from "./ClassDetails";
+import { Helmet } from "react-helmet-async";
 
 const AllClasses = () => {
   const [search, setSearch] = useState("");
   const [classes, isLoading, refetch] = useClasses(search);
+  const reverseArray = [...classes]?.reverse()
 
   useEffect(() => {
     Aos.init();
@@ -31,6 +33,9 @@ const AllClasses = () => {
 
   return (
     <div className="space-y-5 md:space-y-10">
+      <Helmet>
+        <title>Knack | All Classes</title>
+      </Helmet>
       <TopBanner
         img={banner}
         title={"Exciting online skill-building with Knack."}
@@ -59,7 +64,7 @@ const AllClasses = () => {
           id="classes"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
         >
-          {classes?.map((course) => (
+          {reverseArray?.map((course) => (
             <div
               key={course?._id}
               className="card  group  bg-gradient-to-r from-cyan-700 to-cyan-950 text-white shadow-xl border-2 border-r-sky-400 border-l-sky-700 border-t-sky-500 border-b-sky-300"

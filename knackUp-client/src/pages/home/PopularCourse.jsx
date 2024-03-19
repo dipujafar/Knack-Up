@@ -7,9 +7,7 @@ import ClassDetails from "../allClasses/ClassDetails";
 
 const PopularCourse = () => {
   const [classes, isLoading] = useClasses();
-  // const max = classes?.reduce(function(prev, current){
-  //   return (prev && prev?.total_enrollment > current?.total_enrollment);
-  // })
+  const sortClasses = classes?.sort((a,b)=>b?.total_enrollment - a?.total_enrollment);
 
   useEffect(() => {
     Aos.init();
@@ -30,7 +28,7 @@ const PopularCourse = () => {
         subHeading="These courses are most enrolled"
       ></SectionTitle>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
-        {classes?.slice(0, 8)?.map((course) => (
+        {sortClasses?.slice(0, 8)?.map((course) => (
           <div
             key={course?._id}
             className="card h-96  bg-cyan-800   opacity-90 text-gray-100 shadow-2xl border-2 border-r-sky-400 border-l-sky-700 border-t-sky-500 border-b-sky-300"

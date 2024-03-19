@@ -6,6 +6,7 @@ import { imageUpload } from "../../../api/image";
 import useAuth from "../../../hook/useAuth";
 import useAxiosSecure from "../../../hook/useAxiosSecure";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 const AddClass = () => {
   const { user } = useAuth();
@@ -41,6 +42,9 @@ const AddClass = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Knack | Teacher Add Class</title>
+      </Helmet>
       <div className="text-white">
         <SectionTitle
           heading={"Add Class"}

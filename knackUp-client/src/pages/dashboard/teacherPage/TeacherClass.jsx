@@ -1,10 +1,12 @@
+import { Helmet } from "react-helmet-async";
 import Container from "../../../components/shared/Container";
 import SectionTitle from "../../../components/shared/SectionTitle";
 import useTeacherClass from "../../../hook/useTeacherClass";
 import TeacherClassDetails from "./TeacherClassDetails";
 
 const TeacherClass = () => {
-  const [teacherClasses, isLoading, refetch] = useTeacherClass();
+  const [teacherClasses, isLoading] = useTeacherClass();
+  const reverseArray = [...teacherClasses]?.reverse()
   console.log(teacherClasses);
 
   if (isLoading) {
@@ -17,9 +19,12 @@ const TeacherClass = () => {
 
   return (
     <Container>
+        <Helmet>
+            <title>Knack | Teacher  Classes</title>
+        </Helmet>
         <SectionTitle heading={"My Added Class"} subHeading={"These are the classes you added"}></SectionTitle>
       <div>
-        {teacherClasses?.map((cls) => (
+        {reverseArray?.map((cls) => (
           <TeacherClassDetails key={cls?._id} cls={cls}></TeacherClassDetails>
         ))}
       </div>

@@ -3,10 +3,12 @@ import Container from "../../components/shared/Container";
 import useAxiosSecure from "../../hook/useAxiosSecure";
 import useUsers from "../../hook/useUsers";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const AllUsers = () => {
   const [search, setSearch] = useState("");
   const [users, isLoading, refetch] = useUsers(search);
+  const reverseArray = [...users]?.reverse()
   const axiosSecure = useAxiosSecure();
 
   if (isLoading) {
@@ -50,6 +52,9 @@ const AllUsers = () => {
 
   return (
     <div className="text-white">
+      <Helmet>
+        <title>Knack | Admin All User</title>
+      </Helmet>
       <Container>
         <div className="mb-2 flex flex-col md:flex-row items-center justify-between gap-3">
           <h2 className="text-3xl font-medium ">Total User : {users.length}</h2>
@@ -80,7 +85,7 @@ const AllUsers = () => {
                 <th>Action</th>
               </tr>
             </thead>
-            {users?.map((user, inx) => (
+            {reverseArray?.map((user, inx) => (
               <tbody key={user?._id}>
                 {/* row 1 */}
                 <tr>

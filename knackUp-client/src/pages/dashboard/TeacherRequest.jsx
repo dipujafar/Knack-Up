@@ -2,9 +2,11 @@ import Swal from "sweetalert2";
 import Container from "../../components/shared/Container";
 import useAxiosSecure from "../../hook/useAxiosSecure";
 import useTeacherReq from "../../hook/useTeacherReq";
+import { Helmet } from "react-helmet-async";
 
 const TeacherRequest = () => {
   const [teacherReq, isLoading, refetch] = useTeacherReq();
+  const reverseArray = [...teacherReq]?.reverse()
   const axiosSecure = useAxiosSecure();
 
   const handleApprove = async (email) =>{
@@ -67,6 +69,9 @@ const TeacherRequest = () => {
 
   return (
     <div className="text-white">
+      <Helmet>
+        <title>Knack | Admin Teacher Req.</title>
+      </Helmet>
       <Container>
         <h2 className="text-3xl font-medium ">
           Total Request : {teacherReq?.length}
@@ -86,7 +91,7 @@ const TeacherRequest = () => {
                 <th>Action</th>
               </tr>
             </thead>
-            {teacherReq?.map((req, inx) => (
+            {reverseArray?.map((req, inx) => (
               <tbody key={req?._id}>
                 {/* row 1 */}
                 <tr>

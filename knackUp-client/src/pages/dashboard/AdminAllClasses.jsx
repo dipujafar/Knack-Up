@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Container from "../../components/shared/Container";
 import useAllClasses from "../../hook/useAllClasses";
 
@@ -5,13 +6,13 @@ import useAllClasses from "../../hook/useAllClasses";
 
 const AdminAllClasses = () => {
     const [allClasses,isLoading] = useAllClasses();
-    console.log(allClasses);
+    const reverseArray = [...allClasses]?.reverse()
 
-    const handleApprove = () =>{
+    const handleApprove = (id) =>{
         //
     }
     
-    const handleReject = () =>{
+    const handleReject = (id) =>{
         //
     }
 
@@ -26,9 +27,12 @@ const AdminAllClasses = () => {
  
     return (
         <div className="text-white">
+          <Helmet>
+            <title>Knack | Admin All Classes</title>
+          </Helmet>
           <Container>
             <h2 className="text-3xl font-medium ">
-              Total Classes : {allClasses?.length}
+              Total Classes : {reverseArray?.length}
             </h2>
             {<div className="overflow-x-auto bg-gradient-to-r from-sky-950 to-sky-900 rounded">
               <table className="table">
@@ -47,7 +51,7 @@ const AdminAllClasses = () => {
                     <th>Action</th>
                   </tr>
                 </thead>
-                {allClasses?.map((course, inx) => (
+                {reverseArray?.map((course, inx) => (
                   <tbody key={course?._id}>
                     {/* row 1 */}
                     <tr>
@@ -71,7 +75,7 @@ const AdminAllClasses = () => {
                       
                       <td>
                         {course?.status === "pending" ? (
-                          <button onClick={()=>handleApprove(course?.email)} className="btn btn-sm bg-gradient-to-r from-cyan-950 to-sky-900 rounded text-white">
+                          <button onClick={()=>handleApprove(course?._id)} className="btn btn-sm bg-gradient-to-r from-cyan-950 to-sky-900 rounded text-white">
                             Approve
                           </button>
                         ) : (
@@ -80,7 +84,7 @@ const AdminAllClasses = () => {
                       </td>
                       <td>
                         {course.status === "pending" ? (
-                          <button onClick={()=>handleReject(course?.email)} className="btn btn-sm bg-gradient-to-r from-cyan-950 to-sky-900 rounded text-white">
+                          <button onClick={()=>handleReject(course?._id)} className="btn btn-sm bg-gradient-to-r from-cyan-950 to-sky-900 rounded text-white">
                             Reject
                           </button>
                         ) : (

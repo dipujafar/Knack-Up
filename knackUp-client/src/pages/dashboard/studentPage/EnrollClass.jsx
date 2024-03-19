@@ -1,10 +1,13 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useNavigate } from "react-router-dom";
 import Container from "../../../components/shared/Container";
 import useAuth from "../../../hook/useAuth";
 import useMyCourse from "../../../hook/useMyCourse";
+import { Helmet } from "react-helmet-async";
 
 const EnrollClass = () => {
   const [myCourse, isLoading] = useMyCourse();
+  const reverseArray = [...myCourse]?.reverse()
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -19,6 +22,9 @@ const EnrollClass = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Knack | {user?.displayName}'s Classes</title>
+      </Helmet>
       <div className="text-white">
         <div>
           <h1 className="text-2xl font-medium text-blue-200 mb-5 md:mb-10">
@@ -28,7 +34,7 @@ const EnrollClass = () => {
         <hr className="mb-5" />
         {myCourse?.length ? (
           <div className="grid grid-cols-1 gap-5">
-            {myCourse.map((cls) => (
+            {reverseArray.map((cls) => (
               <div
                 key={cls?._id}
                 className="card lg:card-side bg-gradient-to-r from-cyan-700 to-cyan-600 shadow-xl border-4 border-r-sky-400 border-l-sky-700 border-t-sky-500 border-b-sky-300"

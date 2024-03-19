@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hook/useAuth";
 import useAxiosSecure from "../../hook/useAxiosSecure";
 import { toast } from "react-toastify";
@@ -7,12 +7,12 @@ import useMyCourse from "../../hook/useMyCourse";
 
 /* eslint-disable react/prop-types */
 const ClassDetails = ({ course }) => {
+  const location = useLocation();
   const {user} = useAuth();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [myCourse] = useMyCourse();
   const [cart] = useCart();
-  console.log(cart)
   const [ , , refetch] = useCart();
   const handleAddCart = async course =>{
 
@@ -67,7 +67,7 @@ const ClassDetails = ({ course }) => {
             ?
             <button onClick={()=> handleAddCart(course)} className="btn mr-2  text-white bg-gradient-to-r from-cyan-600 to-cyan-900" >Add to cart</button>
             :
-            <button onClick={()=>navigate('/login')} className="btn mr-2  text-white bg-gradient-to-r from-cyan-600 to-cyan-900" >Add to cart</button>
+            <button onClick={()=>navigate('/login', {state : location?.pathname})} className="btn mr-2  text-white bg-gradient-to-r from-cyan-600 to-cyan-900" >Add to cart</button>
           }
         
           <button className="btn btn-outline  btn-error">Close</button>

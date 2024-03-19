@@ -10,6 +10,7 @@ import { FaTrashAlt } from "react-icons/fa";
 
 const Cart = () => {
     const [cart, ,refetch] = useCart();
+    const reverseArray = [...cart]?.reverse()
     const {user} = useAuth();
     const totalPrice = cart.reduce((acc, current) => acc + current.price, 0);
     
@@ -68,7 +69,7 @@ const Cart = () => {
               </tr>
             </thead>
             <tbody>
-              {cart.map((course, inx) => (
+              {reverseArray.map((course, inx) => (
                 <tr key={course?._id}>
                   <th>{inx + 1}</th>
                   <td>

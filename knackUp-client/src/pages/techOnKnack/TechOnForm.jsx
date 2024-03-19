@@ -8,9 +8,11 @@ import Container from "../../components/shared/Container";
 import { toast } from "react-toastify";
 import useTeacher from "../../hook/useTeacher";
 import useTeacherReq from "../../hook/useTeacherReq";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const TechOnForm = () => {
+  const location = useLocation();
+  console.log(location)
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [isAdmin] = useAdmin();
@@ -80,7 +82,7 @@ const TechOnForm = () => {
           <div>
           <h1 className="text-3xl text-gray-300 mb-4 text-center">Please login and apply for tech on knack </h1>
           <div className="flex items-center justify-center">
-          <p onClick={()=>navigate("/login")} className="btn bg-gradient-to-r from-cyan-900 to-cyan-700 text-white w-40 ">Login</p>
+          <p onClick={()=>navigate("/login",  {state: location?.pathname})} className="btn bg-gradient-to-r from-cyan-900 to-cyan-700 text-white w-40 ">Login</p>
           </div>
           </div>
         </div>
