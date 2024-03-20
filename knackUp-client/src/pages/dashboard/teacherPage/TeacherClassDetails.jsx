@@ -4,7 +4,7 @@
 const TeacherClassDetails = ({cls}) => {
   return (
     <div>
-      <div className="card lg:card-side bg-gradient-to-r from-cyan-700 to-cyan-800 shadow-xl text-white  border-r-sky-400 border-l-sky-700 border-t-sky-500 border-b-sky-300">
+      <div className="card lg:card-side bg-gradient-to-r from-cyan-700 to-cyan-800 shadow-xl text-white border-4  border-r-sky-400 border-l-sky-700 border-t-sky-500 border-b-sky-300">
         <figure className="lg:w-1/2">
           <img src={cls?.image} alt="Title_banner" className="w-full md:h-72" />
         </figure>

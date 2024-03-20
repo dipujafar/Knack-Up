@@ -1,15 +1,39 @@
 import { Helmet } from "react-helmet-async";
 import Container from "../../components/shared/Container";
 import useAllClasses from "../../hook/useAllClasses";
+import Swal from 'sweetalert2'
+import useAxiosSecure from "../../hook/useAxiosSecure";
 
 
 
 const AdminAllClasses = () => {
-    const [allClasses,isLoading] = useAllClasses();
-    const reverseArray = [...allClasses]?.reverse()
+    const [allClasses,isLoading, refetch] = useAllClasses();
+    const reverseArray = [...allClasses]?.reverse();
+    const axiosSecure = useAxiosSecure();
 
     const handleApprove = (id) =>{
-        //
+      console.log(id)
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be accepted this class!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Confirm!"
+      }).then(async(result) => {
+        if (result.isConfirmed) {
+          const res = await axiosSecure.put(`/admin/classes/${id}`);
+          if(res?.data?.modifiedCount > 0){
+            refetch();
+          Swal.fire({
+            title: "Successfully!",
+            text: "Approved This Class",
+            icon: "success"
+          });
+          }
+        }
+      });
     }
     
     const handleReject = (id) =>{

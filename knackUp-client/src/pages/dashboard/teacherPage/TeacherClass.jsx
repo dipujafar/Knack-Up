@@ -23,7 +23,7 @@ const TeacherClass = () => {
             <title>Knack | Teacher  Classes</title>
         </Helmet>
         <SectionTitle heading={"My Added Class"} subHeading={"These are the classes you added"}></SectionTitle>
-      <div>
+      <div className="grid grid-cols-1 gap-5">
         {reverseArray?.map((cls) => (
           <TeacherClassDetails key={cls?._id} cls={cls}></TeacherClassDetails>
         ))}

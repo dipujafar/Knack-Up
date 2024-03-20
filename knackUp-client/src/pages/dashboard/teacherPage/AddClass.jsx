@@ -14,6 +14,7 @@ const AddClass = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -37,6 +38,7 @@ const AddClass = () => {
     const res = await axiosSecure.post("/classes", clsData);
     if(res?.data?.insertedId){
       toast("successfully add this class wait for admin approve");
+      reset();
     }
   };
 

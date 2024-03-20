@@ -151,6 +151,27 @@ async function run() {
       }
     })
 
+    app.put("/admin/classes/:id", verifyToken, verifyAdmin, async(req, res)=>{
+      try{
+      const id = req?.params?.id;
+      console.log(id)
+      const query = {_id: new ObjectId(id)};
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          status: "accepted",
+        },
+      };
+      const result = await coursesCollection.updateOne(query,updateDoc,options);
+      res.send(result);
+      }
+      catch {
+        (err) => {
+          res.send(err);
+        };
+      }
+    })
+
     //feedback related apis
     app.get("/feedbacks", async (req, res) => {
       const result = await feedbackCollection.find().toArray();
@@ -343,6 +364,8 @@ async function run() {
         }
       }
     );
+
+    
 
     app.get("/users/teacher/:email", verifyToken, async (req, res) => {
       try {

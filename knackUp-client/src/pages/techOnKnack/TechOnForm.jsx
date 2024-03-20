@@ -24,6 +24,7 @@ const TechOnForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -46,6 +47,7 @@ const TechOnForm = () => {
     const res = await axiosSecure.post("/users/teacherReq", reqData);
     if(res?.data?.insertedId){
       toast("Your request is pending. Please wait for approve");
+      reset();
     }
   };
 
