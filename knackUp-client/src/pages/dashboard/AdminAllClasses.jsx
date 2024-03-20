@@ -12,7 +12,6 @@ const AdminAllClasses = () => {
     const axiosSecure = useAxiosSecure();
 
     const handleApprove = (id) =>{
-      console.log(id)
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be accepted this class!",
@@ -37,7 +36,27 @@ const AdminAllClasses = () => {
     }
     
     const handleReject = (id) =>{
-        //
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be reject this class!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Confirm!"
+      }).then(async(result) => {
+        if (result.isConfirmed) {
+          const res = await axiosSecure.put(`/admin/classesRej/${id}`);
+          if(res?.data?.modifiedCount > 0){
+            refetch();
+          Swal.fire({
+            title: "Successfully!",
+            text: "Rejected This Class",
+            icon: "success"
+          });
+          }
+        }
+      });
     }
 
     if (isLoading) {

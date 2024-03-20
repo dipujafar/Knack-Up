@@ -10,7 +10,6 @@ const useFeedback = () => {
       return res?.data;
     },
   });
-  console.log(feedbacks)
 
 return [feedbacks, isLoading, refetch];
 };

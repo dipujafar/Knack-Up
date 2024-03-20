@@ -14,7 +14,6 @@ import SectionTitle from "../../components/shared/SectionTitle";
 
 const Feedback = () => {
   const [feedbacks, isLoading] = useFeedback();
-  console.log(feedbacks);
 
   if (isLoading) {
     return (

@@ -7,7 +7,6 @@ import TeacherClassDetails from "./TeacherClassDetails";
 const TeacherClass = () => {
   const [teacherClasses, isLoading] = useTeacherClass();
   const reverseArray = [...teacherClasses]?.reverse()
-  console.log(teacherClasses);
 
   if (isLoading) {
     return (

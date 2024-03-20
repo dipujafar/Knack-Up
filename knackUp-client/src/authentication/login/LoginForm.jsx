@@ -18,7 +18,6 @@ const LoginForm = () => {
   const { signIn, singInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location)
   const axiosPublic = useAxiosPublic();
 
   const {

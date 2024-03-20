@@ -12,7 +12,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const TechOnForm = () => {
   const location = useLocation();
-  console.log(location)
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [isAdmin] = useAdmin();
