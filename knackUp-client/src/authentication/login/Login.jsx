@@ -13,7 +13,7 @@ const Login = () => {
         </Helmet>
         <Container>
           <div className="min-h-screen bg-cover flex flex-col ">
-            <div className="flex flex-col md:flex-row items-center gap-10">
+            <div className="flex flex-col lg:flex-row items-center gap-10">
               <div className="flex-1">
                <LoginForm></LoginForm>
               </div>

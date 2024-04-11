@@ -58,7 +58,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="md:w-3/4 bg-black bg-transparent bg-opacity-40  mx-auto border  rounded shadow-lg shadow-gray-300 p-5 text-white">
+    <div className=" lg:w-3/4 bg-black bg-transparent bg-opacity-40  mx-auto border  rounded shadow-lg shadow-gray-300 p-5 text-white">
       <h1 className="text-2xl font-medium mb-5 uppercase text-center">Login</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Email image */}
@@ -141,6 +141,14 @@ const LoginForm = () => {
           <span className="text-cyan-300">Sign Up</span>
         </Link>
       </p>
+      <div className="mt-5 flex flex-col justify-center items-center">
+          <p>admin@gmail.com</p>
+          <p>123456</p>
+          <p>teacher@gmail.com</p>
+          <p>123456</p>
+          <p>student@gmail.com</p>
+          <p>123456</p>
+      </div>
     </div>
   );
 };

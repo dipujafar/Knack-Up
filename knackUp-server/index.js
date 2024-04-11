@@ -106,7 +106,9 @@ async function run() {
           title: { $regex: search, $options: "i" },
         };
         const result = await coursesCollection.find(query).toArray();
-        const acceptClass = result?.filter(course=> course?.status === "accepted");
+        const acceptClass = result?.filter(
+          (course) => course?.status === "accepted"
+        );
         res.send(acceptClass);
       } catch {
         (err) => {
@@ -118,7 +120,9 @@ async function run() {
     app.get("/classes", async (req, res) => {
       try {
         const result = await coursesCollection.find().toArray();
-        const acceptClass = result?.filter(course=> course?.status === "accepted");
+        const acceptClass = result?.filter(
+          (course) => course?.status === "accepted"
+        );
         res.send(acceptClass);
       } catch {
         (err) => {
@@ -127,7 +131,7 @@ async function run() {
       }
     });
 
-    app.get("/allClasses",verifyToken, verifyAdmin, async (req, res) => {
+    app.get("/allClasses", verifyToken, verifyAdmin, async (req, res) => {
       try {
         const result = await coursesCollection.find().toArray();
         res.send(result);
@@ -138,58 +142,73 @@ async function run() {
       }
     });
 
-    app.post("/classes", verifyToken, verifyTeacher, async(req, res)=>{
-      try{
+    app.post("/classes", verifyToken, verifyTeacher, async (req, res) => {
+      try {
         const clsData = req?.body;
         const result = await coursesCollection.insertOne(clsData);
         res.send(result);
-      }
-      catch {
+      } catch {
         (err) => {
           res.send(err);
         };
       }
-    })
+    });
 
-    app.put("/admin/classes/:id", verifyToken, verifyAdmin, async(req, res)=>{
-      try{
-      const id = req?.params?.id;
-      const query = {_id: new ObjectId(id)};
-      const options = { upsert: true };
-      const updateDoc = {
-        $set: {
-          status: "accepted",
-        },
-      };
-      const result = await coursesCollection.updateOne(query,updateDoc,options);
-      res.send(result);
+    app.put(
+      "/admin/classes/:id",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        try {
+          const id = req?.params?.id;
+          const query = { _id: new ObjectId(id) };
+          const options = { upsert: true };
+          const updateDoc = {
+            $set: {
+              status: "accepted",
+            },
+          };
+          const result = await coursesCollection.updateOne(
+            query,
+            updateDoc,
+            options
+          );
+          res.send(result);
+        } catch {
+          (err) => {
+            res.send(err);
+          };
+        }
       }
-      catch {
-        (err) => {
-          res.send(err);
-        };
-      }
-    })
+    );
 
-    app.put("/admin/classesRej/:id", verifyToken, verifyAdmin, async(req, res)=>{
-      try{
-      const id = req?.params?.id;
-      const query = {_id: new ObjectId(id)};
-      const options = { upsert: true };
-      const updateDoc = {
-        $set: {
-          status: "rejected",
-        },
-      };
-      const result = await coursesCollection.updateOne(query,updateDoc,options);
-      res.send(result);
+    app.put(
+      "/admin/classesRej/:id",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        try {
+          const id = req?.params?.id;
+          const query = { _id: new ObjectId(id) };
+          const options = { upsert: true };
+          const updateDoc = {
+            $set: {
+              status: "rejected",
+            },
+          };
+          const result = await coursesCollection.updateOne(
+            query,
+            updateDoc,
+            options
+          );
+          res.send(result);
+        } catch {
+          (err) => {
+            res.send(err);
+          };
+        }
       }
-      catch {
-        (err) => {
-          res.send(err);
-        };
-      }
-    })
+    );
 
     //feedback related apis
     app.get("/feedbacks", async (req, res) => {
@@ -278,22 +297,8 @@ async function run() {
     // teacher related apis
 
     app.get("/users/TeacherReq", verifyToken, async (req, res) => {
-      try{
-      const result = await teacherReqCollection.find().toArray();
-      res.send(result);
-      }
-      catch {
-        (err) => {
-          res.send(err);
-        };
-      }
-    });
-
-    app.get("/teacherClasses/:email",verifyToken, verifyTeacher, async (req, res) => {
       try {
-        const email = req?.params?.email;
-        const query = {email: email}
-        const result = await coursesCollection.find(query).toArray();
+        const result = await teacherReqCollection.find().toArray();
         res.send(result);
       } catch {
         (err) => {
@@ -301,6 +306,24 @@ async function run() {
         };
       }
     });
+
+    app.get(
+      "/teacherClasses/:email",
+      verifyToken,
+      verifyTeacher,
+      async (req, res) => {
+        try {
+          const email = req?.params?.email;
+          const query = { email: email };
+          const result = await coursesCollection.find(query).toArray();
+          res.send(result);
+        } catch {
+          (err) => {
+            res.send(err);
+          };
+        }
+      }
+    );
 
     app.post("/users/teacherReq", verifyToken, async (req, res) => {
       try {
@@ -384,8 +407,6 @@ async function run() {
       }
     );
 
-    
-
     app.get("/users/teacher/:email", verifyToken, async (req, res) => {
       try {
         const email = req.params.email;
@@ -406,6 +427,47 @@ async function run() {
         };
       }
     });
+
+    app.delete("/teacherClass/:id", async (req, res) => {
+      try {
+        const id = req?.params?.id;
+        const query = { _id: new ObjectId(id) };
+        const result = await coursesCollection.deleteOne(query);
+        res.send(result);
+      } catch {
+        (err) => {
+          res.send(err);
+        };
+      }
+    });
+
+    app.put(
+      "/classUpdate/:id",
+      verifyToken,
+      verifyTeacher,
+      async (req, res) => {
+        try {
+          const updateData = req?.body;
+          const id = req?.params?.id;
+          const query = { _id: new ObjectId(id) };
+          console.log(updateData);
+          const updateDoc = {
+            $set: {
+              title: updateData?.title,
+              price: updateData?.price,
+              short_description: updateData?.description,
+            },
+          };
+          const result = await coursesCollection.updateOne(query, updateDoc);
+          console.log(result)
+          res.send(result);
+        } catch {
+          (err) => {
+            res.send(err);
+          };
+        }
+      }
+    );
 
     // cart related api
     app.get("/cart/:email", verifyToken, async (req, res) => {
@@ -518,10 +580,10 @@ async function run() {
     });
 
     // Send a ping to confirm a successful connection
-    // // await client.db("admin").command({ ping: 1 });
-    // console.log(
-    //   "Pinged your deployment. You successfully connected to MongoDB!"
-    // );
+    // await client.db("admin").command({ ping: 1 });
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();

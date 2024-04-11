@@ -90,8 +90,8 @@ const AdminAllClasses = () => {
                     <th className="text-white">Short Description</th>
                     <th className="text-white">Price</th>
                     <th className="text-white">Status</th>
-                    <th>Action</th>
-                    <th>Action</th>
+                    <th className="text-white">Action</th>
+                    <th className="text-white">Action</th>
                   </tr>
                 </thead>
                 {reverseArray?.map((course, inx) => (
