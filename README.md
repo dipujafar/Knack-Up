@@ -6,7 +6,8 @@ Knack is a E-Learning website. Where a learner can developed his skill and a tea
 - There are dashboards for 3 types of users Admin, Teacher,  Student
 Technology : React JS, Node JS, Express JS, MongoDB, Firebase (Authentication), JWT (Authorization) 
     
- Login --
+----- Login -----
+
 for admin access:
 Email: admin@gmail.com
 Password: 123456
