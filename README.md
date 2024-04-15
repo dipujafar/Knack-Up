@@ -7,12 +7,14 @@ Knack is a E-Learning website. Where a learner can developed his skill and a tea
 Technology : React JS, Node JS, Express JS, MongoDB, Firebase (Authentication), JWT (Authorization) 
     
  Login --
+for admin access:
+Email: admin@gmail.com
+Password: 123456
 
-admin@gmail.com
-123456
+for teacher access
+Email: teacher@gmail.com
+Password: 123456
 
-teacher@gmail.com
-123456
-
-student@gmail.com
-123456
+for student 
+Email: student@gmail.com
+password: 123456
