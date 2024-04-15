@@ -16,6 +16,7 @@ import EnrollClass from "../pages/dashboard/studentPage/EnrollClass";
 import Cart from "../pages/dashboard/studentPage/Cart";
 import Payment from "../pages/payment/Payment";
 import TeacherClass from "../pages/dashboard/teacherPage/TeacherClass";
+import Profile from "../pages/profile/Profile";
 
 
 
@@ -86,6 +87,10 @@ const Router = createBrowserRouter([
         {
           path: "teacherClass",
           element: <TeacherClass></TeacherClass>
+        },
+        {
+          path: "profile",
+          element: <Profile></Profile>
         }
       ]
     }

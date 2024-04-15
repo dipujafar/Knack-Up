@@ -5,7 +5,7 @@ import useTeacherClass from "../../../hook/useTeacherClass";
 import TeacherClassDetails from "./TeacherClassDetails";
 
 const TeacherClass = () => {
-  const [teacherClasses, isLoading] = useTeacherClass();
+  const [teacherClasses, isLoading, refetch] = useTeacherClass();
   const reverseArray = [...teacherClasses]?.reverse()
 
   if (isLoading) {
@@ -24,7 +24,7 @@ const TeacherClass = () => {
         <SectionTitle heading={"My Added Class"} subHeading={"These are the classes you added"}></SectionTitle>
       <div className="grid grid-cols-1 gap-5">
         {reverseArray?.map((cls) => (
-          <TeacherClassDetails key={cls?._id} cls={cls}></TeacherClassDetails>
+          <TeacherClassDetails key={cls?._id} cls={cls} refetch={refetch}></TeacherClassDetails>
         ))}
       </div>
     </Container>

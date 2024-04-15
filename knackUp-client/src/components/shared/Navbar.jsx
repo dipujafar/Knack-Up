@@ -13,7 +13,6 @@ import useTeacher from "../../hook/useTeacher";
 import { BsCart4 } from "react-icons/bs";
 import useCart from "../../hook/useCart";
 
-
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [open, setOpen] = useState(false);
@@ -88,31 +87,33 @@ const Navbar = () => {
             Dashboard
           </NavLink>
         </li>
-     
       )}
       {user && !isAdmin && !isTeacher && (
         <>
-        <li>
-          <NavLink
-            to="/dashboard/myClass"
-            className={({ isActive, isPending }) =>
-              isPending ? "pending" : isActive ? "active" : ""
-            }
-          >
-            Dashboard
-          </NavLink>
-        </li>
-           <li className="text-xl" >
-           <NavLink
-             to="/dashboard/cart"
-             className={({ isActive, isPending }) =>
-               isPending ? "pending" : isActive ? "active" : ""
-             }
-           >
-             <BsCart4 /> <sup className="bg-sky-100 text-black text- rounded-full p-2">+{cart?.length}</sup>
-           </NavLink>
-         </li>
-         </>
+          <li>
+            <NavLink
+              to="/dashboard/myClass"
+              className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? "active" : ""
+              }
+            >
+              Dashboard
+            </NavLink>
+          </li>
+          <li className="text-xl">
+            <NavLink
+              to="/dashboard/cart"
+              className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? "active" : ""
+              }
+            >
+              <BsCart4 />{" "}
+              <sup className="bg-sky-100 text-black text- rounded-full p-2">
+                +{cart?.length}
+              </sup>
+            </NavLink>
+          </li>
+        </>
       )}
     </>
   );
@@ -177,6 +178,12 @@ const Navbar = () => {
                   <Link to="/">
                     <p className=" mt-1 flex items-center gap-1 hover:text-sky-300">
                       <FaHome /> Home
+                    </p>
+                  </Link>
+                  <hr />
+                  <Link to="/dashboard/profile">
+                    <p className="mt-1 flex items-center gap-1 hover:text-sky-300">
+                      <FaHome /> profile
                     </p>
                   </Link>
                   <hr />
