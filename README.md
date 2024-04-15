@@ -8,14 +8,14 @@ Technology : React JS, Node JS, Express JS, MongoDB, Firebase (Authentication), 
     
 ----- Login -----
 
-for admin access:
-Email: admin@gmail.com
+for admin access ---
+Email: admin@gmail.com 
 Password: 123456
 
-for teacher access
-Email: teacher@gmail.com
+for teacher access ---
+Email: teacher@gmail.com 
 Password: 123456
 
-for student 
-Email: student@gmail.com
+for student ---
+Email: student@gmail.com 
 password: 123456
